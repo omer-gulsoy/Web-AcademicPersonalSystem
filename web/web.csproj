@@ -6,4 +6,28 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\" />
+    <Folder Include="Areas\Aday\Controllers\" />
+    <Folder Include="Areas\Aday\Data\" />
+    <Folder Include="Areas\Aday\Models\" />
+    <Folder Include="Areas\Aday\Views\" />
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\" />
+    <Folder Include="Areas\Juri\Controllers\" />
+    <Folder Include="Areas\Juri\Data\" />
+    <Folder Include="Areas\Juri\Models\" />
+    <Folder Include="Areas\Juri\Views\" />
+    <Folder Include="Areas\Yonetici\Controllers\" />
+    <Folder Include="Areas\Yonetici\Data\" />
+    <Folder Include="Areas\Yonetici\Models\" />
+    <Folder Include="Areas\Yonetici\Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+  </ItemGroup>
+
 </Project>

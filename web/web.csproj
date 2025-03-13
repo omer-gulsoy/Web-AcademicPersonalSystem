@@ -44,4 +44,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\business\business.csproj" />
+    <ProjectReference Include="..\data\data.csproj" />
+    <ProjectReference Include="..\dto\dto.csproj" />
+    <ProjectReference Include="..\entity\entity.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -21,4 +21,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\business\business.csproj" />
+    <ProjectReference Include="..\data\data.csproj" />
+    <ProjectReference Include="..\dto\dto.csproj" />
+  </ItemGroup>
+
 </Project>

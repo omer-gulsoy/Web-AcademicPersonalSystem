@@ -27,6 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\templates%28admin%29\.github\workflows\handle-new-issue-comment.yml" />
+    <None Include="wwwroot\templates%28admin%29\.github\workflows\handle-new-issue.yml" />
+    <None Include="wwwroot\templates%28admin%29\.github\workflows\issue-staler.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MailKit" Version="4.11.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.3" />

@@ -7,9 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstract\" />
     <Folder Include="Concrate\" />
-    <Folder Include="ValidationRules\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,9 +28,9 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\data\data.csproj" />
-    <ProjectReference Include="..\dto\dto.csproj" />
-  </ItemGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\dto\dto.csproj" />
+	</ItemGroup>
+	
 </Project>

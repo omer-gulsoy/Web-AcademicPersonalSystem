@@ -2,7 +2,7 @@
 
 namespace web.Controllers
 {
-    public class HomeController : Controller
+    public class ForgetPasswordController : Controller
     {
         public IActionResult Index()
         {

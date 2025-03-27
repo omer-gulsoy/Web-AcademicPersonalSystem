@@ -1,0 +1,81 @@
+﻿@using dto.dtos.AppUserDtos
+@model AppUserRegisterDto
+@{
+	ViewData["Title"] = "Kaydol";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-xxl">
+	<div class="authentication-wrapper authentication-basic container-p-y">
+		<div class="authentication-inner">
+			<!-- Register Card -->
+			<div class="card">
+				<div class="card-body">
+					<h4 class="mb-2">Hoş Geldiniz</h4>
+					<p class="mb-4"></p>
+
+					<form class="mb-3" method="POST">
+						<div class="mb-3">
+							<label for="Name" class="form-label">İsminiz</label>
+							<input type="text"
+								   class="form-control"
+								   asp-for="Name"
+								   placeholder="İsminizi Giriniz"
+								   autofocus />
+						</div>
+						<div class="mb-3">
+							<label for="Surname" class="form-label">Soyisminiz</label>
+							<input type="text"
+								   class="form-control"
+								   asp-for="Surname"
+								   placeholder="Soyisminizi Giriniz"
+								   autofocus />
+						</div>
+						<div class="mb-3">
+							<label for="UserName" class="form-label">T.C. Kimlik Numaranız</label>
+							<input type="text"
+								   class="form-control"
+								   asp-for="UserName"
+								   placeholder="T.C. Kimlik Numaranızı Giriniz"
+								   autofocus />
+						</div>
+						<div class="mb-3">
+							<label for="Email" class="form-label">E-Posta Adresiniz</label>
+							<input type="email" class="form-control" asp-for="Email" placeholder="E-Posta Adresini Giriniz" />
+						</div>
+						<div class="mb-3 form-password-toggle">
+							<label class="form-label" for="password">Şifre</label>
+							<div class="input-group input-group-merge">
+								<input type="password"
+									   asp-for="Password"
+									   class="form-control"
+									   placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+									   aria-describedby="password" />
+								<span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+							</div>
+						</div>
+						<div class="mb-3 form-password-toggle">
+							<label class="form-label" for="password">Şifre</label>
+							<div class="input-group input-group-merge">
+								<input type="password"
+									   asp-for="ConfirmPassword"
+									   class="form-control"
+									   placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+									   aria-describedby="password" />
+								<span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary d-grid w-100">Kaydol</button>
+					</form>
+
+					<p class="text-center">
+						<span>Hesabın var mı?</span>
+						<a href="~/Login/Index">
+							<span>Giriş yap</span>
+						</a>
+					</p>
+				</div>
+			</div>
+			<!-- Register Card -->
+		</div>
+	</div>
+</div>

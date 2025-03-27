@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace entity.Concrate
 {
-	public class Role
+	public class Rol
 	{
 		[Key]
-		public int Role_Id { get; set; }
+		public int Rol_Id { get; set; }
 		public string? Isim { get; set; }
 		public List<Personel_Role>? Personel_Roles { get; set; }
 	}

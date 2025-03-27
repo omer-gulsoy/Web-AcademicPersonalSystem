@@ -15,8 +15,8 @@ namespace entity.Concrate
 		[ForeignKey("Personel")]
 		public int Personel_Id { get; set; }
 		public Personel? Personel { get; set; }
-		[ForeignKey("Role")]
-		public int Role_Id { get; set; }
-		public Role? Role { get; set; }
+		[ForeignKey("Rol")]
+		public int Rol_Id { get; set; }
+		public Rol? Rol { get; set; }
 	}
 }

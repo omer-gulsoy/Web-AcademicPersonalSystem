@@ -36,6 +36,18 @@ namespace web.Controllers
 				{
 					return RedirectToAction("Index", "Home", new { area = "Admin" });
 				}
+				else if (roles.Contains("ADAY"))
+				{
+					return RedirectToAction("Index", "Home", new { area = "Aday" });
+				}
+				else if (roles.Contains("JURI"))
+				{
+					return RedirectToAction("Index", "Home", new { area = "Juri" });
+				}
+				else if (roles.Contains("YONETICI"))
+				{
+					return RedirectToAction("Index", "Home", new { area = "Yonetici" });
+				}
 				else
 				{
 					return RedirectToAction("Index", "Login");

@@ -27,15 +27,37 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 
-app.MapControllerRoute(
-	name: "areas",
-	pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-);
+app.UseEndpoints(endpoints =>
+{
+	endpoints.MapControllerRoute(
+		name: "areas",
+		pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+});
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+app.UseEndpoints(endpoints =>
+{
+	endpoints.MapAreaControllerRoute(
+		name: "Admin",
+		areaName: "Admin",
+		pattern: "Admin/{controller=Home}/{action=Index}/{id?}"
+		);
+	endpoints.MapAreaControllerRoute(
+		name: "Aday",
+		areaName: "Aday",
+		pattern: "Aday/{controller=Home}/{action=Index}/{id?}"
+		);
+	endpoints.MapAreaControllerRoute(
+		name: "Juri",
+		areaName: "Juri",
+		pattern: "Juri/{controller=Home}/{action=Index}/{id?}"
+		);
+	endpoints.MapAreaControllerRoute(
+		name: "Yonetici",
+		areaName: "Yonetici",
+		pattern: "Yonetici/{controller=Home}/{action=Index}/{id?}"
+		);
+	endpoints.MapDefaultControllerRoute();
+});
 
 
 app.Run();

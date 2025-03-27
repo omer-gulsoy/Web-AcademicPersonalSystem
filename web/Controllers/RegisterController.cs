@@ -31,6 +31,7 @@ namespace web.Controllers
 					Email = appUserRegisterDto.Email,
 					Name = appUserRegisterDto.Name,
 					Surname = appUserRegisterDto.Surname,
+
 				};
 				var result = await _userManager.CreateAsync(appUser, appUserRegisterDto.Password);
 				if (result.Succeeded)

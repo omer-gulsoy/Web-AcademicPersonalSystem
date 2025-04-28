@@ -23,6 +23,7 @@ namespace web.Areas.Admin.Controllers
 									.ToList();
 
 			ViewBag.Basvurular = basvurular;
+			ViewBag.Personeller=Context.Personels.ToList();
 			var degerler = Context.BasvuruYonlendirs.ToList();
 			return View(degerler);
 		}
@@ -34,7 +35,7 @@ namespace web.Areas.Admin.Controllers
 			{
 				Context.BasvuruYonlendirs.Add(e);
 				Context.SaveChanges();
-				return RedirectToAction("Index", "Yonlendir");
+				return RedirectToAction("Index", "Home");
 			}
 			return BadRequest("Yönlendirilirken hata oluştu!");
 		}

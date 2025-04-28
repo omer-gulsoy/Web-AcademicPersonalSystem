@@ -14,37 +14,27 @@
 
 				<!-- Striped Rows -->
 				<div class="card">
-					<h5 class="card-header"><i class="menu-icon tf-icons bx bx-news"></i>Açık İlanlar</h5>
+					<h5 class="card-header"><i class="menu-icon tf-icons bx bx-news"></i>Aktif İlanlar</h5>
 					<div class="table-responsive text-nowrap">
 						<table style="text-align:center" class="table table-striped">
 							<thead>
 								<tr>
-									<th>İSİM SOYİSİM</th>
-									<th>E-POSTA ADRESİ</th>
-									<th>TELEFON NUMARASI</th>
-									<th>BAŞVURDUĞU İLAN</th>
+									<th>BAŞLIK</th>
+									<th>DETAYLAR</th>
 								</tr>
 							</thead>
 							<tbody class="table-border-bottom-0">
-@* 								@foreach (var satir in ViewBag.Basvurular)
+								@foreach (var satir in ViewBag.Ilanlar)
 								{
 									<tr>
-										<td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@satir.Personel.Isim @satir.Personel.Soyisim</strong></td>
+										<td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@satir.Baslik</strong></td>
 										<td>
-											<a href="mailto:@satir.Personel.Eposta">
-												@satir.Personel.Eposta
-											</a>
+											<button class="btn btn-primary" onclick="showPopup('short', 28)">Görüntüle</button>
 										</td>
-										<td>
-											<a href="tel:@satir.Personel.Telefon">
-												@satir.Personel.Telefon
-											</a>
-										</td>
-										<td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@satir.Ilan.Baslik</strong></td>
 									</tr>
 								}
 							
- *@							</tbody>
+							</tbody>
 						</table>
 					</div>
 				</div>
@@ -73,90 +63,25 @@
 				</div>
 				<div class="card-body">
 					<ul class="p-0 m-0">
-@* 						@foreach (var ilan in ViewBag.Ilanlar)
+						@foreach (var ilan in ViewBag.Basvurular)
 						{
 							<li class="d-flex mb-4 pb-1">
 								<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
 									<div class="me-2">
 										<a href="~/Admin/Ilan/Index">
-											<h6 class="mb-0">@ilan.Baslik</h6>
+											<h6 class="mb-0">@ilan.Ilan.Baslik</h6>
 										</a>
 									</div>
 									<div class="user-progress d-flex align-items-center gap-1">
-										<span class="text-muted">@ilan.Tarih.ToString("dd MMM yyyy")</span>
+										<span class="text-muted">@ilan.Ilan.Tarih.ToString("dd MMM yyyy")</span>
 									</div>
 								</div>
 							</li>
-
 						}
-
- *@					</ul>
+					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-
-<!-- Mesaj Görüntüleme Modalı -->
-<div class="modal fade" id="messageModal" tabindex="-1" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="messageModalTitle"></h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
-			</div>
-			<div class="modal-body" id="messageModalBody"></div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- Mesaj Görüntüleme Modalı -->
-<div class="modal fade" id="messageModal2" tabindex="-1" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="messageModalTitle"></h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
-			</div>
-			<div class="modal-body">
-				<p id="messageModalBody"></p>
-				<hr>
-				<p><strong>Cep Telefonu:</strong> <span id="modalMail"></span></p>
-				<p><strong>Sabit Telefon:</strong> <span id="modalTelefonCep"></span></p>
-				<p><strong>Unvan:</strong> <span id="modalTelefonSabit"></span></p>
-				<p><strong>Kurum:</strong> <span id="modalUnvan"></span></p>
-				<p><strong>Açıklama:</strong> <span id="modalKurum"></span></p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-<script>
-	function openModal(name, message) {
-		document.getElementById("messageModalTitle").innerText = name;
-		document.getElementById("messageModalBody").innerText = message;
-		var modal = new bootstrap.Modal(document.getElementById("messageModal"));
-		modal.show();
-	}
-		function openModal2(isim, aciklama, mail, telefonCep, telefonSabit, unvan, kurumIsmi) {
-		document.getElementById("messageModalTitle").innerText = isim;
-		document.getElementById("messageModalBody").innerText = aciklama;
-		document.getElementById("modalMail").innerText = mail;
-		document.getElementById("modalTelefonCep").innerText = telefonCep;
-		document.getElementById("modalTelefonSabit").innerText = telefonSabit;
-		document.getElementById("modalUnvan").innerText = unvan;
-		document.getElementById("modalKurum").innerText = kurumIsmi;
-
-		var modal = new bootstrap.Modal(document.getElementById("messageModal2"));
-		modal.show();
-	}
-
-</script>

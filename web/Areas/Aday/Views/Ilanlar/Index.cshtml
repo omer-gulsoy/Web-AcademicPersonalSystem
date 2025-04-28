@@ -1,0 +1,162 @@
+﻿@model List<entity.Concrate.Ilan>
+@{
+	ViewData["Title"] = "Aktif İlanlar";
+	Layout = "~/Areas/Aday/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+	<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Aday Paneli /</span> Aktif İlanlar </h4>
+	<hr class="my-5" />
+
+	<!-- Bordered Table -->
+	<div class="card">
+		<div class="card-header d-flex justify-content-between">
+			<h5>İlanlar</h5>
+		</div>
+		<div class="card-body">
+			<div class="table-responsive text-nowrap">
+				<table class="table table-bordered">
+					<thead>
+						<tr style="text-align:center">
+							<th><b>BAŞLIK</b></th>
+							<th><b>AÇIKLAMA</b></th>
+							<th><b>TARİH</b></th>
+							<th style="width: 80px;"><b>SAAT</b></th>
+							<th style="width: 80px;"><b>BAŞVUR</b></th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model)
+						{
+							<tr style="text-align:center">
+								<td><b>@item.Baslik</b></td>
+								<td>
+									<button class="btn btn-primary" onclick="showPopup('short', @item.Ilan_Id)">Görüntüle</button>
+								</td>
+								<td><b>@item.Tarih.ToString("dd-MMMM-yyyy")</b></td>
+								<td><b>@item.Tarih.ToString("HH:mm")</b></td>
+								<td>
+									<a class="btn" onclick="deleteIlan(@item.Ilan_Id)">
+										<i class="bx bx-plus-medical"></i>
+									</a>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Popup Modal -->
+	<div class="modal fade" id="popupModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">İlan Açıklama</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+				</div>
+				<div class="modal-body" id="popupContent"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Kapat</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Confirm Modal -->
+	<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-body" id="confirmModalMessage">Emin misiniz?</div>
+				<div class="modal-footer p-2 d-flex justify-content-center">
+					<button type="button" class="btn btn-success btn-sm" id="confirmYes">Evet</button>
+					<button type="button" class="btn btn-danger btn-sm" id="confirmNo">Hayır</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Toast Container -->
+	<div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
+
+	<script>
+				// Toast Gösterme Fonksiyonu
+		function showToast(message) {
+			const toastContainer = document.getElementById('toast-container');
+
+			const toast = document.createElement('div');
+			toast.textContent = message;
+			toast.style.backgroundColor = '#1e9d4b';
+			toast.style.color = 'white';
+			toast.style.padding = '10px 20px';
+			toast.style.marginTop = '10px';
+			toast.style.borderRadius = '8px';
+			toast.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
+			toast.style.fontSize = '16px';
+			toast.style.opacity = '1';
+			toast.style.transition = 'opacity 0.5s ease';
+
+			toastContainer.appendChild(toast);
+
+			// Daha uzun süre göstermek için timeout'u arttıralım (10 saniye örneği)
+			const displayDuration = 10000; // 10 saniye
+
+			setTimeout(() => {
+				toast.style.opacity = '0';
+				setTimeout(() => {
+					toast.remove();
+				}, 500); // Fade out süresi (0.5 saniye)
+			}, displayDuration);
+		}
+
+
+		// Popup içeriğini açan fonksiyon
+		function showPopup(type, ilanId) {
+			fetch(`/Admin/Ilan/IlanGet/${ilanId}`)
+				.then(response => response.json())
+				.then(data => {
+					console.log("Popup'a gelen veri:", data);
+					let content = type === 'short'
+						? (data.aciklama?.trim()?.length ? data.aciklama : "Kısa açıklama bulunamadı.")
+						: (data.tarih?.trim()?.length ? data.tarih : "Açıklama bulunamadı.");
+
+					openPopup(content);
+				})
+				.catch(error => console.error("Hata:", error));
+		}
+
+		// Popup açan yardımcı fonksiyon
+		function openPopup(content) {
+			const popupContent = document.getElementById("popupContent");
+			popupContent.innerHTML = content;
+			new bootstrap.Modal(document.getElementById("popupModal")).show();
+		}
+
+				// Confirm Fonksiyonu
+		function showConfirm(message, onConfirm) {
+			const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+			document.getElementById('confirmModalMessage').innerText = message;
+
+			const yesBtn = document.getElementById('confirmYes');
+			const noBtn = document.getElementById('confirmNo');
+
+			// Önce eski event listenerları temizleyelim
+			yesBtn.onclick = () => {
+				onConfirm(true);
+				modal.hide();
+			};
+			noBtn.onclick = () => {
+				onConfirm(false);
+				modal.hide();
+			};
+
+			modal.show();
+		}
+
+
+	</script>
+
+
+

@@ -1,0 +1,49 @@
+﻿@model LoginViewModel
+@{
+	ViewData["Title"] = "Giriş Yap";
+	Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+<section class="contact-us" id="contact">
+	<div class="container">
+		<div class="row mt-5">
+			<div class="col-lg-4 align-self-center mx-auto">
+				<div class="row">
+					<div class="col-lg-12">
+						<form id="contact" method="post">
+							<div class="row">
+								<div class="col-lg-12">
+									<h2 style="color:#1e9d4b;text-align:center"><b>GİRİŞ YAP</b></h2>
+								</div>
+								<div class="col-lg-12">
+									<fieldset>
+										<input asp-for="UserName" type="text" id="tc" placeholder="T.C. Kimlik Numaranız" required maxlength="11" inputmode="numeric">
+									</fieldset>
+								</div>
+								<div class="col-lg-12">
+									<fieldset>
+										<input asp-for="Password" type="password" placeholder="Parolanız" required="">
+									</fieldset>
+								</div>
+								<div class="col-lg-12 d-flex align-items-center justify-content-center">
+									<fieldset>
+										<button type="submit" id="form-submit" class="button">GİRİŞ YAP</button>
+									</fieldset>
+								</div>
+								<div class="col-lg-12 col-sm-7 mt-3">
+									<div class="left-content">
+										<p style="text-align:center">Parolanızı mı unuttunuz? <a href="/ForgetPassword/Index">Sıfırlayın.</a></p>
+									</div>
+								</div>
+								<div class="col-lg-12 col-sm-7 mt-3">
+									<div class="left-content">
+										<p style="text-align:center">Hesabınız yok mu? <a href="/Register/Index">Kaydolun.</a></p>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

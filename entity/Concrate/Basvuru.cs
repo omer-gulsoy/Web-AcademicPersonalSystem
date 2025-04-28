@@ -12,7 +12,6 @@ namespace entity.Concrate
 	{
 		[Key]
 		public int Basvuru_Id { get; set; }
-		public int Statu { get; set; }
 		[ForeignKey("Ilan")]
 		public int Ilan_Id { get; set; }
 		public Ilan? Ilan { get; set; }

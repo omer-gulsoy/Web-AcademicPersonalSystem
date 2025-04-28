@@ -1,8 +1,17 @@
 using data.Concrate;
 using entity.Concrate;
+using Microsoft.AspNetCore.Http.Features;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+
+// --- buraya ekle ---
+builder.Services.Configure<FormOptions>(options =>
+{
+	options.MultipartBodyLengthLimit = 100_000_000; // 100 MB limiti (istersen büyütebilirsin)
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
@@ -11,6 +20,10 @@ builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Contex
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+
+// Statik dosyalar izinli olsun
+app.UseStaticFiles();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

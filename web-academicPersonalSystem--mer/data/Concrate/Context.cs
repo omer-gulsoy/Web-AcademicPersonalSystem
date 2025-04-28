@@ -13,8 +13,10 @@ namespace data.Concrate
 	{
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
+			//Ömer DB
+			optionsBuilder.UseSqlServer("server=ELITEBOOK\\MSSQLSERVER2012;database=AcademicDB;integrated security=true;TrustServerCertificate=True;");
 			//Derya DB
-			optionsBuilder.UseSqlServer("server=DERYA\\HUAWEI;database=AcademicDB;integrated security=true;TrustServerCertificate=True;");
+			//optionsBuilder.UseSqlServer("server=DERYA\\HUAWEI;database=AcademicDB;integrated security=true;TrustServerCertificate=True;");
 		}
 		public DbSet<ArastirmaProjesi>? ArastirmaProjesis { get; set; }
 		public DbSet<Atif>? Atifs { get; set; }

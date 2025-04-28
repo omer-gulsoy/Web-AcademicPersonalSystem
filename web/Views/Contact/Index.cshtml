@@ -3,156 +3,74 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- ============================================================== -->
-<!-- Start Techno Contact Address Area -->
-<!-- ============================================================== -->
-
-<div class="contact_address_area bg_color2 pt-80 pb-70">
+<section class="contact-us" id="contact">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-12">
-				<div class="section_title text_center mb-55">
-					<div class="section_sub_title uppercase mb-3">
-						<h6>BİZE ULAŞIN</h6>
-					</div>
-					<div class="section_main_title">
-						<h1></h1>
-					</div>
-					<div class="em_bar">
-						<div class="em_bar_bg"></div>
+			<div class="col-lg-9 align-self-center">
+				<div class="row">
+					<div class="col-lg-12">
+						<form id="contact" action="" method="post">
+							<div class="row">
+								<div class="col-lg-12">
+									<h2>BİZİMLE İLETİŞİME GEÇİN</h2>
+								</div>
+								<div class="col-lg-3">
+									<fieldset>
+										<input name="name" type="text" id="name" placeholder="İSMİNİZ" required="">
+									</fieldset>
+								</div>
+								<div class="col-lg-3">
+									<fieldset>
+										<input name="surname" type="text" id="name" placeholder="SOYİSMİNİZ" required="">
+									</fieldset>
+								</div>
+								<div class="col-lg-3">
+									<fieldset>
+										<input name="email" type="text" id="email" pattern="[^ ]*[^ ]*" placeholder="E-POSTA ADRESİNİZ" required="">
+									</fieldset>
+								</div>
+								<div class="col-lg-3">
+									<fieldset>
+										<input name="subject" type="text" id="subject" placeholder="KONU" required="">
+									</fieldset>
+								</div>
+								<div class="col-lg-12">
+									<fieldset>
+										<textarea name="message" type="text" class="form-control" id="message" placeholder="İLETİNİZ" required=""></textarea>
+									</fieldset>
+								</div>
+								<div class="col-lg-12">
+									<fieldset>
+										<button type="submit" id="form-submit" class="button">GÖNDER</button>
+									</fieldset>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-4 col-md-6 col-sm-12">
-				<div class="single_contact_now">
-					<div class="single_contact_now_inner">
-						<div class="single_contact_now_icon">
-							<i class="fa fa-phone"></i>
-						</div>
-						<div class="single_contact_now_content">
-							<h4>Telefon Numarası</h4>
-							<p class="m-0 pt-2">+880 1314 183818</p>
-							<p>+ (90) 323 3924</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 col-sm-12">
-				<div class="single_contact_now">
-					<div class="single_contact_now_inner">
-						<div class="single_contact_now_icon">
-							<i class="fa fa-envelope-o"></i>
-						</div>
-						<div class="single_contact_now_content">
-							<h4>Email Adresi</h4>
-							<p class="m-0 pt-2">info@kocaeli.com</p>
-							<p>kocaeli@gmail.com</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 col-sm-12">
-				<div class="single_contact_now">
-					<div class="single_contact_now_inner">
-						<div class="single_contact_now_icon">
-							<i class="fa fa-map-marker"></i>
-						</div>
-						<div class="single_contact_now_content">
-							<h4>Konum</h4>
-							<p class="m-0 pt-2">Kabaoğlu, Baki Komsuoğlu bulvarı</p>
-							<p>İzmit, KOCAELİ</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- ============================================================== -->
-<!-- End Techno Contact Address Area -->
-<!-- ============================================================== -->
-<!--==================================================-->
-<!----- End Techno Map Area ----->
-<!--==================================================-->
-<div class="google_map_area">
-	<div class="row-fluid">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			<div class="google_map_area">
-				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3058.5769365626516!2d29.91907677607614!3d40.82217317137716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cb5badf629fe45%3A0xc81fa849234e8755!2sKocaeli%20%C3%9Cniversitesi!5e1!3m2!1str!2str!4v1742064323771!5m2!1str!2str" width="1600" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-			</div>
-		</div>
-	</div>
-</div>
-<!--==================================================-->
-<!----- End Techno Map Area ----->
-<!--==================================================-->
-<!--==================================================-->
-<!----- Start Techno Contact Area ----->
-<!--==================================================-->
-<div class="appointment_form pb-100">
-	<div class="container">
-		<div class="row nagative_margin">
-			<div class="col-xl-12">
-				<div class="appointment_form_inner">
-					<div class="appointment_title pb-35">
-						<h1>BİZE ULAŞIN</h1>
-					</div>
-					<form id="contact_form"
-						  action="https://formspree.io/f/myyleorq"
-						  method="POST"
-						  id="dreamit-form">
-						<div class="row">
-							<div class="col-lg-6">
-								<h7>İsim</h7>
-								<div class="form_box mb-30">
-									<input type="text" name="name" placeholder="Name" />
-								</div>
-							</div>
-							<div class="col-lg-6">
-								<h7>Soyisim</h7>
-								<div class="form_box mb-30">
-									<input type="text" name="name" placeholder="Name" />
-								</div>
-							</div>
-							<div class="col-lg-6">
-								<h7>E-Posta Adresi</h7>
-								<div class="form_box mb-30">
-									<input type="email"
-										   name="email"
-										   placeholder="Email Address" />
-								</div>
-							</div>
-							<div class="col-lg-6">
-								<h7>Telefon</h7>
-								<div class="form_box mb-30">
-									<input type="text"
-										   name="phone"
-										   placeholder="Phone Number" />
-								</div>
-							</div>
-
-							<div class="col-lg-12">
-								<div class="form_box mb-30">
-									<textarea name="message"
-											  id="message"
-											  cols="30"
-											  rows="10"
-											  placeholder="Mesajınızı yazınız"></textarea>
-								</div>
-								<div class="quote_btn text_center">
-									<button class="btn" type="submit">Gönder</button>
-								</div>
-							</div>
-						</div>
-					</form>
-					<div class="status"></div>
+			<div class="col-lg-3">
+				<div class="right-info">
+					<ul>
+						<li>
+							<h6>Telefon Numaramız</h6>
+							<a href="tel:+902623031000"><span>+90(262)303 10 00</span></a>
+						</li>
+						<li>
+							<h6>E-Posta Adresimiz</h6>
+							<a href="mailto:kurumsaliletisim@kocaeli.edu.tr"><span>ogrenci@kocaeli.edu.tr</span></a>
+						</li>
+						<li>
+							<h6>Adresimiz</h6>
+							<a><span>Kabaoğlu, Baki Komsuoğlu bulvarı No:515, Umuttepe, 41001 İzmit/Kocaeli</span></a>
+						</li>
+						<li>
+							<h6>Resmi Sitemiz</h6>
+							<a href="https://www.kocaeli.edu.tr/"><span>www.kocaeli.edu.tr</span></a>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<!--==================================================-->
-<!----- End Techno Contact Area ----->
-<!--==================================================-->
+</section>

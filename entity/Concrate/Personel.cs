@@ -14,9 +14,9 @@ namespace entity.Concrate
 		public int Personel_Id { get; set; }
 		public string? Isim { get; set; }
 		public string? Soyisim { get; set; }
-		public int TC { get; set; }
+		public string? TC { get; set; }
 		public string? Eposta { get; set; }
-		public int Telefon { get; set; }
+		public string? Telefon { get; set; }
 		public bool Status { get; set; }
 		[ForeignKey("Unvan")]
 		public int Unvan_Id { get; set; }
@@ -35,5 +35,6 @@ namespace entity.Concrate
 		public List<TezYoneticiligi>? TezYoneticiligis { get; set; }
 		public List<Patent>? Patents { get; set; }
 		public List<Editorluk>? Editorluks { get; set; }
+		public List<DegerlendirmeBelge>? DegerlendirmeBelges { get; set; }
 	}
 }

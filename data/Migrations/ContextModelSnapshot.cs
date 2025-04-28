@@ -317,22 +317,41 @@ namespace data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Basvuru_Id"));
 
+                    b.Property<int>("BasvuruStatu_Id")
+                        .HasColumnType("int");
+
                     b.Property<int>("Ilan_Id")
                         .HasColumnType("int");
 
                     b.Property<int>("Personel_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Statu")
-                        .HasColumnType("int");
-
                     b.HasKey("Basvuru_Id");
+
+                    b.HasIndex("BasvuruStatu_Id")
+                        .IsUnique();
 
                     b.HasIndex("Ilan_Id");
 
                     b.HasIndex("Personel_Id");
 
                     b.ToTable("Basvurus");
+                });
+
+            modelBuilder.Entity("entity.Concrate.BasvuruStatu", b =>
+                {
+                    b.Property<int>("BasvuruStatu_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BasvuruStatu_Id"));
+
+                    b.Property<string>("Statu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BasvuruStatu_Id");
+
+                    b.ToTable("BasvuruStatus");
                 });
 
             modelBuilder.Entity("entity.Concrate.Belge", b =>
@@ -406,6 +425,60 @@ namespace data.Migrations
                     b.HasIndex("Puanlama_Id");
 
                     b.ToTable("BilimselToplantis");
+                });
+
+            modelBuilder.Entity("entity.Concrate.Contact", b =>
+                {
+                    b.Property<int>("Contact_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Contact_Id"));
+
+                    b.Property<string>("Eposta")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Isim")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Konu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mesaj")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Soyisim")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Contact_Id");
+
+                    b.ToTable("Contacts");
+                });
+
+            modelBuilder.Entity("entity.Concrate.DegerlendirmeBelge", b =>
+                {
+                    b.Property<int>("DegerlendirmeBelge_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DegerlendirmeBelge_Id"));
+
+                    b.Property<int>("Basvuru_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DosyaYolu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Personel_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("DegerlendirmeBelge_Id");
+
+                    b.HasIndex("Basvuru_Id");
+
+                    b.HasIndex("Personel_Id");
+
+                    b.ToTable("DegerlendirmeBelges");
                 });
 
             modelBuilder.Entity("entity.Concrate.Editorluk", b =>
@@ -545,7 +618,7 @@ namespace data.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("Tarih")
+                    b.Property<DateTime>("Tarih")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Ilan_Id");
@@ -801,11 +874,11 @@ namespace data.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<int>("TC")
-                        .HasColumnType("int");
+                    b.Property<string>("TC")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Telefon")
-                        .HasColumnType("int");
+                    b.Property<string>("Telefon")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Unvan_Id")
                         .HasColumnType("int");
@@ -1038,6 +1111,12 @@ namespace data.Migrations
 
             modelBuilder.Entity("entity.Concrate.Basvuru", b =>
                 {
+                    b.HasOne("entity.Concrate.BasvuruStatu", "BasvuruStatu")
+                        .WithOne("Basvurus")
+                        .HasForeignKey("entity.Concrate.Basvuru", "BasvuruStatu_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("entity.Concrate.Ilan", "Ilan")
                         .WithMany("Basvurus")
                         .HasForeignKey("Ilan_Id")
@@ -1049,6 +1128,8 @@ namespace data.Migrations
                         .HasForeignKey("Personel_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("BasvuruStatu");
 
                     b.Navigation("Ilan");
 
@@ -1091,6 +1172,25 @@ namespace data.Migrations
                     b.Navigation("Personel");
 
                     b.Navigation("Puanlama");
+                });
+
+            modelBuilder.Entity("entity.Concrate.DegerlendirmeBelge", b =>
+                {
+                    b.HasOne("entity.Concrate.Basvuru", "Basvuru")
+                        .WithMany("DegerlendirmeBelges")
+                        .HasForeignKey("Basvuru_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("entity.Concrate.Personel", "Personel")
+                        .WithMany("DegerlendirmeBelges")
+                        .HasForeignKey("Personel_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basvuru");
+
+                    b.Navigation("Personel");
                 });
 
             modelBuilder.Entity("entity.Concrate.Editorluk", b =>
@@ -1369,6 +1469,13 @@ namespace data.Migrations
             modelBuilder.Entity("entity.Concrate.Basvuru", b =>
                 {
                     b.Navigation("Belges");
+
+                    b.Navigation("DegerlendirmeBelges");
+                });
+
+            modelBuilder.Entity("entity.Concrate.BasvuruStatu", b =>
+                {
+                    b.Navigation("Basvurus");
                 });
 
             modelBuilder.Entity("entity.Concrate.Ilan", b =>
@@ -1412,6 +1519,8 @@ namespace data.Migrations
                     b.Navigation("Basvurus");
 
                     b.Navigation("BilimselToplantis");
+
+                    b.Navigation("DegerlendirmeBelges");
 
                     b.Navigation("Editorluks");
 

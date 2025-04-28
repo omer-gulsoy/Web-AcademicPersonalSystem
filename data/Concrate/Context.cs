@@ -19,8 +19,11 @@ namespace data.Concrate
 		public DbSet<ArastirmaProjesi>? ArastirmaProjesis { get; set; }
 		public DbSet<Atif>? Atifs { get; set; }
 		public DbSet<Basvuru>? Basvurus { get; set; }
+		public DbSet<BasvuruStatu>? BasvuruStatus { get; set; }
 		public DbSet<Belge>? Belges { get; set; }
 		public DbSet<BilimselToplanti>? BilimselToplantis { get; set; }
+		public DbSet<Contact>? Contacts { get; set; }
+		public DbSet<DegerlendirmeBelge>? DegerlendirmeBelges { get; set; }
 		public DbSet<Editorluk>? Editorluks { get; set; }
 		public DbSet<EoFaaliyetleri>? EoFaaliyetleris { get; set; }
 		public DbSet<Gorev>? Gorevs { get; set; }

@@ -1,0 +1,87 @@
+﻿    <!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="~/templates(admin)/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="~/templates(admin)/assets/vendor/libs/popper/popper.js"></script>
+<script src="~/templates(admin)/assets/vendor/js/bootstrap.js"></script>
+<script src="~/templates(admin)/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+<script src="~/templates(admin)/assets/vendor/js/menu.js"></script>
+<!-- endbuild -->
+<!-- Vendors JS -->
+<script src="~/templates(admin)/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+<!-- Main JS -->
+<script src="~/templates(admin)/assets/js/main.js"></script>
+
+<!-- Page JS -->
+<script src="~/templates(admin)/assets/js/dashboards-analytics.js"></script>
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+<script>
+	//according to loftblog tut
+	$('.nav li:first').addClass('active');
+
+	var showSection = function showSection(section, isAnimate) {
+	  var
+	  direction = section.replace(/#/, ''),
+	  reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+	  reqSectionPos = reqSection.offset().top - 0;
+
+	  if (isAnimate) {
+		$('body, html').animate({
+		  scrollTop: reqSectionPos },
+		800);
+	  } else {
+		$('body, html').scrollTop(reqSectionPos);
+	  }
+
+	};
+
+	var checkSection = function checkSection() {
+	  $('.section').each(function () {
+		var
+		$this = $(this),
+		topEdge = $this.offset().top - 80,
+		bottomEdge = topEdge + $this.height(),
+		wScroll = $(window).scrollTop();
+		if (topEdge < wScroll && bottomEdge > wScroll) {
+		  var
+		  currentId = $this.data('section'),
+		  reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+		  reqLink.closest('li').addClass('active').
+		  siblings().removeClass('active');
+		}
+	  });
+	};
+
+	$('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
+	  e.preventDefault();
+	  showSection($(this).attr('href'), true);
+	});
+
+	$(window).scroll(function () {
+	  checkSection();
+	});
+</script>
+<script>
+	// Sayfa tamamen yüklendiğinde
+	window.addEventListener("load", function() {
+	  setTimeout(function() {
+		document.getElementById("loader").classList.add("hidden");
+		document.getElementById("content").style.display = "block";
+	  }, 1000); // 5 saniye sonra loader kaybolacak
+	});
+</script>
+<script>
+	const tcInput = document.getElementById('tc');
+
+	tcInput.addEventListener('keypress', function (e) {
+		// Eğer basılan tuş sayı değilse (0-9 arası değilse), yazmayı engelle
+		if (e.which < 48 || e.which > 57) {
+			e.preventDefault();
+		}
+	});
+</script>

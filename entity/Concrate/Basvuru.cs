@@ -18,6 +18,10 @@ namespace entity.Concrate
 		[ForeignKey("Personel")]
 		public int Personel_Id { get; set; }
 		public Personel? Personel { get; set; }
+		[ForeignKey("BasvuruStatu")]
+		public int BasvuruStatu_Id { get; set; }
+		public BasvuruStatu? BasvuruStatu { get; set; }
 		public List<Belge>? Belges { get; set; }
+		public List<DegerlendirmeBelge>? DegerlendirmeBelges { get; set; }
 	}
 }

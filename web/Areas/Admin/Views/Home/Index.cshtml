@@ -1,8 +1,10 @@
 ﻿@{
-	ViewData["Title"] = "Admin Paneli";
+	ViewData["Title"] = "Anasayfa";
 	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 <div class="container-xxl flex-grow-1 container-p-y">
+	<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Admin Paneli /</span> Anasayfa </h4>
+	<hr class="my-5" />
 	<div class="row">
 		<!-- Total Revenue -->
 		<div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
@@ -16,31 +18,23 @@
 							<thead>
 								<tr>
 									<th>İSİM SOYİSİM</th>
-									<th>E-POSTA ADRESİ</th>
-									<th>TELEFON NUMARASI</th>
-									<th>MESAJ</th>
+									<th>İLETİŞİM BİLGİLERİ</th>
+									<th>BAŞVURDUĞU İLANLAR</th>
 								</tr>
 							</thead>
 							<tbody class="table-border-bottom-0">
 								@foreach (var satir in ViewBag.Basvurular)
 								{
 									<tr>
-										<td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@satir.Personel.Isim @satir.Personel.Soyisim</strong></td>
-										<td>
-											<a href="mailto:@satir.Personel.Eposta">
-												@satir.Personel.Eposta
-											</a>
+										<td style="text-align:left">
+											<i class="fab fa-angular fa-lg text-danger me-3"></i>
+											<strong>@satir.Personel.Isim @satir.Personel.Soyisim</strong>
 										</td>
 										<td>
-											<a href="tel:@satir.Personel.Telefon">
-												@satir.Personel.Telefon
-											</a>
+											<button class="btn btn-primary" onclick="openContactModal('@satir.Personel.Eposta', '@satir.Personel.Telefon')">Görüntüle</button>
 										</td>
-
 										<td>
-											<button class="btn-sm btn-danger" onclick="openModal('@satir.Personel.Isim @satir.Personel.Soyisim', '@satir.Personel.Telefon')">
-												Görüntüle
-											</button>
+											<button class="btn btn-primary" onclick="openIlanModal('@satir.Ilan.Baslik', '@satir.Ilan.Aciklama')">Görüntüle</button>
 										</td>
 									</tr>
 								}
@@ -52,7 +46,6 @@
 			</div>
 		</div>
 		<!--/ Total Revenue -->
-
 		<div class="col-md-6 col-lg-4 order-2 mb-4">
 			<div class="card h-100">
 				<div class="card-header d-flex align-items-center justify-content-between">
@@ -67,8 +60,8 @@
 							<i class="bx bx-dots-vertical-rounded"></i>
 						</button>
 						<div class="dropdown-menu dropdown-menu-end" aria-labelledby="transactionID">
-							<a class="dropdown-item" href="~/Company/News/Index">Kullanıcı gözü</a>
-							<a class="dropdown-item" href="~/Admin/NewsEdit/Index">Düzenle</a>
+							<a class="dropdown-item" href="~/Ilan/Index">Kullanıcı gözü</a>
+							<a class="dropdown-item" href="~/Admin/Ilan/Index">Düzenle</a>
 						</div>
 					</div>
 				</div>
@@ -79,7 +72,7 @@
 							<li class="d-flex mb-4 pb-1">
 								<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
 									<div class="me-2">
-										<a href="~/Admin/NewsEdit/Index">
+										<a href="~/Admin/Ilan/Index">
 											<h6 class="mb-0">@ilan.Baslik</h6>
 										</a>
 									</div>
@@ -98,41 +91,38 @@
 </div>
 
 
-<!-- Mesaj Görüntüleme Modalı -->
-<div class="modal fade" id="messageModal" tabindex="-1" aria-hidden="true">
-	<div class="modal-dialog">
+
+<!-- İletişim Bilgileri Popup Modal -->
+<div class="modal fade" id="contactModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="messageModalTitle"></h5>
+				<h5 class="modal-title">İletişim Bilgileri</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
 			</div>
-			<div class="modal-body" id="messageModalBody"></div>
+			<div class="modal-body">
+				<p id="contactInfoContent"></p>
+			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Kapat</button>
 			</div>
 		</div>
 	</div>
 </div>
 
-<!-- Mesaj Görüntüleme Modalı -->
-<div class="modal fade" id="messageModal2" tabindex="-1" aria-hidden="true">
-	<div class="modal-dialog">
+<!-- İlan Detayları Popup Modal -->
+<div class="modal fade" id="ilanModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="messageModalTitle"></h5>
+				<h5 class="modal-title">Başvurduğu İlanlar</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
 			</div>
 			<div class="modal-body">
-				<p id="messageModalBody"></p>
-				<hr>
-				<p><strong>Cep Telefonu:</strong> <span id="modalMail"></span></p>
-				<p><strong>Sabit Telefon:</strong> <span id="modalTelefonCep"></span></p>
-				<p><strong>Unvan:</strong> <span id="modalTelefonSabit"></span></p>
-				<p><strong>Kurum:</strong> <span id="modalUnvan"></span></p>
-				<p><strong>Açıklama:</strong> <span id="modalKurum"></span></p>
+				<p id="ilanDetailsContent"></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Kapat</button>
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Kapat</button>
 			</div>
 		</div>
 	</div>
@@ -140,23 +130,25 @@
 
 
 <script>
-	function openModal(name, message) {
-		document.getElementById("messageModalTitle").innerText = name;
-		document.getElementById("messageModalBody").innerText = message;
-		var modal = new bootstrap.Modal(document.getElementById("messageModal"));
-		modal.show();
-	}
-		function openModal2(isim, aciklama, mail, telefonCep, telefonSabit, unvan, kurumIsmi) {
-		document.getElementById("messageModalTitle").innerText = isim;
-		document.getElementById("messageModalBody").innerText = aciklama;
-		document.getElementById("modalMail").innerText = mail;
-		document.getElementById("modalTelefonCep").innerText = telefonCep;
-		document.getElementById("modalTelefonSabit").innerText = telefonSabit;
-		document.getElementById("modalUnvan").innerText = unvan;
-		document.getElementById("modalKurum").innerText = kurumIsmi;
-
-		var modal = new bootstrap.Modal(document.getElementById("messageModal2"));
-		modal.show();
+	// İletişim bilgilerini Popup Modal'da gösteren fonksiyon
+	function openContactModal(eposta, telefon) {
+		const contactInfoContent = document.getElementById('contactInfoContent');
+		contactInfoContent.innerHTML = `
+			<strong>E-Posta Adresi:</strong> <a href="mailto:${eposta}">${eposta}</a><br><br>
+			<strong>Telefon Numarası:</strong> <a href="tel:${telefon}">${telefon}</a>
+		`;
+		// Modal'ı göster
+		new bootstrap.Modal(document.getElementById('contactModal')).show();
 	}
 
-</script>
+	// İlan detaylarını Popup Modal'da gösteren fonksiyon
+	function openIlanModal(baslik, aciklama) {
+		const ilanDetailsContent = document.getElementById('ilanDetailsContent');
+		ilanDetailsContent.innerHTML = `
+			<strong>Başlık:</strong> ${baslik}<br><br>
+			<strong>Açıklama:</strong> ${aciklama}
+		`;
+		// Modal'ı göster
+		new bootstrap.Modal(document.getElementById('ilanModal')).show();
+	}
+</script>	

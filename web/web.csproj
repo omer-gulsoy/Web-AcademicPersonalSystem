@@ -13,10 +13,9 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Juri\Data\" />
     <Folder Include="Areas\Juri\Models\" />
-    <Folder Include="Areas\Juri\Views\" />
     <Folder Include="Areas\Yonetici\Data\" />
     <Folder Include="Areas\Yonetici\Models\" />
-    <Folder Include="Areas\Yonetici\Views\" />
+    <Folder Include="wwwroot\belgeler\degerlendirme_belgeleri\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -10,8 +10,8 @@ namespace web.Areas.Admin.Controllers
 		[HttpGet]
 		public IActionResult Index()
 		{
-			ViewBag.Ilanlar = Context.Ilans.ToList();
-			ViewBag.Basvurular = Context.Basvurus.ToList();
+			ViewBag.Ilanlar = Context.Ilans.OrderBy(x => x.Baslik).Take(6).ToList();
+			ViewBag.Basvurular = Context.Basvurus.OrderBy(x => x.Ilan.Baslik).Take(10).ToList();
 			ViewBag.Personeller = Context.Personels.ToList();
 			return View();
 		}

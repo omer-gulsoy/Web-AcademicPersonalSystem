@@ -1,0 +1,51 @@
+﻿@model web.Models.ForgetPasswordViewModel
+@{
+    ViewData["Title"] = "Parolamı Unuttum";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-xxl">
+    <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner py-4">
+            <!-- Forgot Password -->
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="mb-2">Şifreni mi unuttun? 🔒</h4>
+                    <p class="mb-4">E-postanı gir, sana şifre sıfırlama talimatlarını gönderelim.</p>
+
+                    <form asp-action="Index" method="post" class="mb-3">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input asp-for="Email"
+                                   class="form-control"
+                                   id="email"
+                                   placeholder="Email adresini giriniz."
+                                   autofocus />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3 text-center">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+
+                            @if (TempData["MailSuccess"] != null)
+                            {
+                                <div class="alert alert-success">
+                                    @TempData["MailSuccess"]
+                                </div>
+                            }
+                        </div>
+
+                        <button class="btn btn-primary d-grid w-100" type="submit">Sıfırlama Linki Gönder</button>
+                    </form>
+
+                    <div class="text-center">
+                        <a href="/Login/Index" class="d-flex align-items-center justify-content-center">
+                            <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                            Giriş ekranına geri dön
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

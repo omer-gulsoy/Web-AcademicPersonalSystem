@@ -1,0 +1,171 @@
+﻿
+@{
+    ViewData["Title"] = "Başvurularım";
+    Layout = "~/Areas/Aday/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+	<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Aday Paneli /</span> Başvurularım </h4>
+	<hr class="my-5" />
+	<!-- Tablo -->
+	<div class="card">
+		<div class="card-header d-flex justify-content-between">
+			<h5>Başvurular</h5>
+		</div>
+		<div class="card-body">
+			<div class="table-responsive text-nowrap">
+				<table class="table table-bordered">
+					<thead>
+						<tr style="text-align:center">
+							<th><b>İLAN</b></th>
+							<th style="width: 80px;"><b>UNVAN</b></th>
+							<th><b>İSİM</b></th>
+							<th><b>SOYİSİM</b></th>
+							<th style="width: 100px;"><b>DİĞER BİLGİLER</b></th>
+							<th style="width: 80px;"><b>STATÜ</b></th>
+							<th style="width: 80px;"><b>DÜZENLE</b></th>
+							<th style="width: 80px;"><b>SİL</b></th>
+						</tr>
+					</thead>
+					<tbody>
+						@* 						@foreach (var item in Model)
+						{
+							<tr style="text-align:center">
+								<td><b>@item.Ilan.Baslik</b></td>
+								<td><b>@item.Personel.Unvan.Isim</b></td>
+								<td><b>@item.Personel.Isim</b></td>
+								<td><b>@item.Personel.Soyisim</b></td>
+								<td>
+									<button class="btn btn-primary" onclick="showPopup('short', @item.Ilan_Id)">Görüntüle</button>
+								</td>
+								<td>
+									<a class="btn">
+										@item.BasvuruStatu.Statu
+									</a>
+								</td>
+								<td>
+									<a class="btn" onclick="editIlan(@item.Ilan_Id)">
+										<i class="bx bx-edit"></i>
+									</a>
+								</td>
+								<td>
+									<a class="btn" onclick="deleteIlan(@item.Ilan_Id)">
+										<i class="bx bx-trash"></i>
+									</a>
+								</td>
+							</tr>
+						} *@
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<!-- Popup -->
+	<div class="modal fade" id="popupModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Diğer Bilgiler</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+				</div>
+				<div class="modal-body" id="popupContent"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Script -->
+	<script>
+		function showPopup(type, basvuruId) {
+			fetch(`/Admin/Basvuru/BasvuruGet/${basvuruId}`)
+				.then(response => response.json())
+				.then(data => {
+					console.log("Popup'a gelen veri:", data);
+					let content = type === 'short'
+						? (data.aciklama?.trim()?.length ? data.basvuruId : "Kısa açıklama bulunamadı.")
+						: (data.tarih?.trim()?.length ? data.tarih : "Açıklama bulunamadı.");
+
+					openPopup(content);
+				})
+				.catch(error => console.error("Hata:", error));
+		}
+		function editBasvuru(basvuruId) {
+			fetch(`/Admin/Basvuru/BasvuruGet/${basvuruId}`)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error("Servis bilgileri alınamadı");
+					}
+					return response.json();
+				})
+				.then(data => {
+					document.getElementById("editBasvuruId").value = data.basvuruId || "";
+					document.getElementById("editBaslik").value = data.baslik || "";
+					document.getElementById("editAciklama").value = data.aciklama || "";
+					document.getElementById("editTarih").value = data.tarih || "";
+					document.getElementById("editStatus").value = data.status || "";
+
+					// Modalı aç
+					new bootstrap.Modal(document.getElementById("updateModal")).show();
+				})
+				.catch(error => console.error("Hata:", error));
+		}
+		function saveEdit() {
+			var ilanId = document.getElementById("editIlanId").value;
+			var updatedData = {
+				Ilan_Id: ilanId,
+				Baslik: document.getElementById("editBaslik").value,
+				Aciklama: document.getElementById("editAciklama").value,
+				Tarih: document.getElementById("editTarih").value,
+				Status: document.getElementById("editStatus").value
+			};
+
+			fetch(`/Admin/Ilan/IlanUpdate`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(updatedData)
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					alert("İlan başarıyla güncellendi!");
+					location.reload();
+				} else {
+					alert("Güncelleme başarısız!");
+				}
+			})
+			.catch(error => console.error("Hata:", error));
+
+			// Modalı kapat
+			var myModal = bootstrap.Modal.getInstance(document.getElementById("updateModal"));
+			myModal.hide();
+		}
+		function deleteIlan(ilanId) {
+			if (confirm("Bu ilanı silmek istediğinizden emin misiniz?")) {
+				fetch(`/Admin/Ilan/IlanDelete`, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: `id=${ilanId}`
+				})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						alert("İlan başarıyla silindi!");
+						location.reload();
+					} else {
+						alert("Silme işlemi başarısız!");
+					}
+				})
+				.catch(error => console.error('Hata:', error));
+			}
+		}
+		function openPopup(content) {
+			const popupContent = document.getElementById("popupContent");
+			popupContent.innerHTML = content;
+			new bootstrap.Modal(document.getElementById("popupModal")).show();
+		}
+		document.getElementById('addIlanModal').addEventListener('show.bs.modal', function (event) {
+			// Form verilerini temizle
+			document.getElementById('ilanForm').reset();
+		});
+	</script>

@@ -36,5 +36,6 @@ namespace entity.Concrate
 		public List<Patent>? Patents { get; set; }
 		public List<Editorluk>? Editorluks { get; set; }
 		public List<DegerlendirmeBelge>? DegerlendirmeBelges { get; set; }
+		public List<BasvuruYonlendir>? BasvuruYonlendirs { get; set; }
 	}
 }

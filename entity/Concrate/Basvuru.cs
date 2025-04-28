@@ -23,5 +23,6 @@ namespace entity.Concrate
 		public BasvuruStatu? BasvuruStatu { get; set; }
 		public List<Belge>? Belges { get; set; }
 		public List<DegerlendirmeBelge>? DegerlendirmeBelges { get; set; }
+		public List<BasvuruYonlendir>? BasvuruYonlendirs { get; set; }
 	}
 }

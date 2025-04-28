@@ -13,12 +13,11 @@ namespace web.Areas.Admin.Controllers
 		public IActionResult Index()
 		{
 			var degerler = Context.Basvurus
-			//.Where(b=>b.BasvuruStatu_Id==2	)
-			.Include(b => b.Ilan)       // İlan'ı dahil et
+			.Include(b => b.Ilan)
 			.Include(b => b.BasvuruStatu)
-			.Include(b => b.Personel)   // Personel'i dahil et)
-			.ThenInclude(p => p.Unvan) // Personel'den Unvan'ı dahil et
-			.OrderBy(x => x.Ilan_Id)
+			.Include(b => b.Personel)
+			.ThenInclude(b => b.Unvan)
+			.OrderBy(b => b.Ilan_Id)
 			.ToList();
 			return View(degerler);
 		}
@@ -72,5 +71,22 @@ namespace web.Areas.Admin.Controllers
 			}
 			return Json(new { success = false });
 		}
+
+		[HttpGet]
+		public IActionResult IlanDetay(int id)
+		{
+			var ilan = Context.Ilans.FirstOrDefault(i => i.Ilan_Id == id);
+			if (ilan == null)
+			{
+				return NotFound();
+			}
+			return Json(new
+			{
+				Baslik = ilan.Baslik,
+				Aciklama = ilan.Aciklama,
+				Tarih = ilan.Tarih
+			});
+		}
+
 	}
 }

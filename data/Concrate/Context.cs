@@ -20,6 +20,7 @@ namespace data.Concrate
 		public DbSet<Atif>? Atifs { get; set; }
 		public DbSet<Basvuru>? Basvurus { get; set; }
 		public DbSet<BasvuruStatu>? BasvuruStatus { get; set; }
+		public DbSet<BasvuruYonlendir>? BasvuruYonlendirs { get; set; }
 		public DbSet<Belge>? Belges { get; set; }
 		public DbSet<BilimselToplanti>? BilimselToplantis { get; set; }
 		public DbSet<Contact>? Contacts { get; set; }

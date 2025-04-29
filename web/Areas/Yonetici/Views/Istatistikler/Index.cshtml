@@ -3,5 +3,35 @@
 	Layout = "~/Areas/Yonetici/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="container-xxl flex-grow-1 container-p-y">
+	<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Yönetici Paneli /</span> Tüm İstatistikler </h4>
+	<hr class="my-5" />
 
+	<!-- Bordered Table -->
+	<div class="card">
+		<div class="card-header d-flex justify-content-between">
+			<h5>İlanlar</h5>
+			<!-- Yeni ilan ekleme butonu -->
+			<button class="btn" data-bs-toggle="modal" data-bs-target="#addIlanModal">
+				<i class="bx bx-plus-circle"></i>
+			</button>
+		</div>
+		<div class="card-body">
+			<div class="table-responsive text-nowrap">
+				<table class="table table-bordered">
+					<thead>
+						<tr style="text-align:center">
+							<th><b>BAŞLIK</b></th>
+							<th><b>AÇIKLAMA</b></th>
+							<th><b>TARİH</b></th>
+							<th style="width: 80px;"><b>SAAT</b></th>
+							<th style="width: 80px;"><b>DÜZENLE</b></th>
+							<th style="width: 80px;"><b>SİL</b></th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>

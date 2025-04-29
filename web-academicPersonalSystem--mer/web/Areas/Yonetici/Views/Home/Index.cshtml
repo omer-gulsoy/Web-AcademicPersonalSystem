@@ -55,7 +55,7 @@
 		<div class="col-md-6 col-lg-4 order-2 mb-4">
 			<div class="card h-100">
 				<div class="card-header d-flex align-items-center justify-content-between">
-					<h5 class="card-title m-0 me-2"><i class="menu-icon tf-icons bx bx-history"></i>Başvurularım</h5>
+					<h5 class="card-title m-0 me-2"><i class="menu-icon tf-icons bx bx-check"></i>Onaylananlar</h5>
 					<div class="dropdown">
 						<button class="btn p-0"
 								type="button"
@@ -92,6 +92,95 @@
 
  *@					</ul>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+
+		<!--/ Total Revenue -->
+		<div class="col-md-6 col-lg-4 order-2 mb-4">
+			<div class="card h-100">
+				<div class="card-header d-flex align-items-center justify-content-between">
+					<h5 class="card-title m-0 me-2"><i class="menu-icon tf-icons bx bx-x"></i>Reddedilenler</h5>
+					<div class="dropdown">
+						<button class="btn p-0"
+								type="button"
+								id="transactionID"
+								data-bs-toggle="dropdown"
+								aria-haspopup="true"
+								aria-expanded="false">
+							<i class="bx bx-dots-vertical-rounded"></i>
+						</button>
+						<div class="dropdown-menu dropdown-menu-end" aria-labelledby="transactionID">
+							<a class="dropdown-item" href="~/Company/Ilan/Index">Kullanıcı gözü</a>
+							<a class="dropdown-item" href="~/Admin/Ilan/Index">Düzenle</a>
+						</div>
+					</div>
+				</div>
+				<div class="card-body">
+					<ul class="p-0 m-0">
+						@* 						@foreach (var ilan in ViewBag.Ilanlar)
+						{
+							<li class="d-flex mb-4 pb-1">
+								<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+									<div class="me-2">
+										<a href="~/Admin/Ilan/Index">
+											<h6 class="mb-0">@ilan.Baslik</h6>
+										</a>
+									</div>
+									<div class="user-progress d-flex align-items-center gap-1">
+										<span class="text-muted">@ilan.Tarih.ToString("dd MMM yyyy")</span>
+									</div>
+								</div>
+							</li>
+
+						}
+
+ *@					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- Total Revenue -->
+		<div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
+			<div class="card">
+
+				<!-- Striped Rows -->
+				<div class="card">
+					<h5 class="card-header"><i class="menu-icon tf-icons bx bx-news"></i>İlanlar</h5>
+					<div class="table-responsive text-nowrap">
+						<table style="text-align:center" class="table table-striped">
+							<thead>
+								<tr>
+									<th>İSİM SOYİSİM</th>
+									<th>E-POSTA ADRESİ</th>
+									<th>TELEFON NUMARASI</th>
+									<th>BAŞVURDUĞU İLAN</th>
+								</tr>
+							</thead>
+							<tbody class="table-border-bottom-0">
+								@* 								@foreach (var satir in ViewBag.Basvurular)
+								{
+									<tr>
+										<td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@satir.Personel.Isim @satir.Personel.Soyisim</strong></td>
+										<td>
+											<a href="mailto:@satir.Personel.Eposta">
+												@satir.Personel.Eposta
+											</a>
+										</td>
+										<td>
+											<a href="tel:@satir.Personel.Telefon">
+												@satir.Personel.Telefon
+											</a>
+										</td>
+										<td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>@satir.Ilan.Baslik</strong></td>
+									</tr>
+								}
+
+ *@							</tbody>
+						</table>
+					</div>
+				</div>
+				<!--/ Striped Rows -->
 			</div>
 		</div>
 	</div>

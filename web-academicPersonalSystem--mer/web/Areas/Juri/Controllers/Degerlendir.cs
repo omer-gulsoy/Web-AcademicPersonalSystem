@@ -1,6 +1,7 @@
 ﻿using data.Concrate;
 using entity.Concrate;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace web.Areas.Juri.Controllers
@@ -12,15 +13,29 @@ namespace web.Areas.Juri.Controllers
 		[HttpGet]
 		public IActionResult Index()
 		{
-			var degerler = Context.Basvurus
-			.Include(b => b.Ilan)       // İlan'ı dahil et
-			.Include(b => b.BasvuruStatu)
-			.Include(b => b.Personel)   // Personel'i dahil et)
-			.ThenInclude(p => p.Unvan) // Personel'den Unvan'ı dahil et
-			.OrderBy(x => x.Ilan_Id)
-			.ToList();
+
+
+			var userTc = User.Identity.Name; // veya User.FindFirst(ClaimTypes.Name)?.Value;
+
+			// userTc ile Personel bul
+			var personelId = Context.Personels
+							.Where(p => p.TC == userTc)
+							.Select(p => p.Personel_Id)
+							.FirstOrDefault();
+
+
+			var degerler = Context.Basvurus	
+				.Include(b => b.Ilan)         // İlan'ı dahil et
+				.Include(b => b.BasvuruStatu) // BaşvuruStatüyü dahil et
+				.Include(b => b.Personel)     // Başvuruyu yapan Personel'i dahil et
+					.ThenInclude(p => p.Unvan) // Personelin Unvanını dahil et
+				.Where(b => Context.BasvuruYonlendirs
+					.Any(by => by.Basvuru_Id == b.Basvuru_Id && by.Personel_Id == personelId))
+				.OrderBy(x => x.Ilan_Id)
+				.ToList();
 			return View(degerler);
 		}
+
 
 		[HttpPost]
 		public async Task<IActionResult> DosyaYukleAjax(IFormFile dosya, int basvuruId)

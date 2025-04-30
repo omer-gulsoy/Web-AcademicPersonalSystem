@@ -17,6 +17,9 @@ Bu proje, Akademik personel alım süreçlerini dijitalleştirmek amacıyla geli
 | Rol      | Yetkiler ve İşlevler |
 |----------|----------------------|
 | **Aday** | Aktif ilanları görüntüleyebilir, başvuru yapabilir, belgeleri yükleyebilir, başvuru sürecini takip edebilir. "Şifremi Unuttum" seçeneğiyle şifresini sıfırlayabilir. |
+
+![image](https://github.com/user-attachments/assets/4d310a9a-3f1b-431c-94f7-4b8e16f7e50e)
+
 | **Yönetici** | Yeni ilan oluşturabilir, jüri atayabilir, başvuruları yönetebilir, istatistiksel verilere erişebilir. |
 | **Jüri** | Kendisine atanan adayların belgelerini inceler, puanlama yapar, değerlendirmeyi sisteme yükler. |
 | **Admin** | Tüm kullanıcıları ve ilanları yönetir, sistem güvenliği ve yetkilendirme ayarlarını kontrol eder. |

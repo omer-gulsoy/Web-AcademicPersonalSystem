@@ -42,9 +42,8 @@ Bu proje, Akademik personel alım süreçlerini dijitalleştirmek amacıyla geli
 
 - **Microsoft SQL Server (MSSQL)**
   - Entity Framework Core (ORM)
-  ## 📊 Veritabanı Diyagramı
+  ![Veritabanı Diyagramı](https://raw.githubusercontent.com/omer-gulsoy/web-academicPersonalSystem/ömer/images/UML.png)
 
-![UML Diyagramı](https://raw.githubusercontent.com/omer-gulsoy/web-academicPersonalSystem/refs/heads/%C3%B6mer/images/UML.png?token=GHSAT0AAAAAADDDAAQZZ2BWQCKVNUM7RVX62ASCVUA)
 
 
 ### 🔐 Kimlik Doğrulama ve Güvenlik

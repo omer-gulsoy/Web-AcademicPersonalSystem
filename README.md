@@ -42,6 +42,8 @@ Bu proje, Akademik personel alım süreçlerini dijitalleştirmek amacıyla geli
 
 - **Microsoft SQL Server (MSSQL)**
   - Entity Framework Core (ORM)
+    ![image](https://github.com/user-attachments/assets/75de6690-5cdb-44db-9086-faccc20c18b6)
+
   
 ---
 

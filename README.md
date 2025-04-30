@@ -71,6 +71,11 @@ Bu proje, Akademik personel alım süreçlerini dijitalleştirmek amacıyla geli
 > Proje ASP.NET Core MVC tabanlıdır. .NET 6 veya üzeri kurulu olmalıdır.
 
 
+## Proje Raporu
+📄 [Proje Raporu](Grup%2017½20Rapor.pdf)
+
+
+
 
 
 

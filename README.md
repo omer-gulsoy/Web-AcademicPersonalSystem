@@ -47,6 +47,7 @@ Bu proje, Akademik personel alım süreçlerini dijitalleştirmek amacıyla geli
 
 
 
+
 ### 🔐 Kimlik Doğrulama ve Güvenlik
 
 - ASP.NET Identity ile kullanıcı yönetimi

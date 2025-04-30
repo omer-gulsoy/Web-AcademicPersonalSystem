@@ -72,7 +72,8 @@ Bu proje, Akademik personel alım süreçlerini dijitalleştirmek amacıyla geli
 
 
 ## Proje Raporu
-📄 [Proje Raporu](Grup%2017½20Rapor.pdf)
+📄 [Grup 17 Proje Raporu](Grup%2017%20Rapor.pdf)
+
 
 
 

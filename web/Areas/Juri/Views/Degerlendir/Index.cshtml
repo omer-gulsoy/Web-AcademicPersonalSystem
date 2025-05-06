@@ -1,200 +1,54 @@
-﻿@{
+﻿@model List<dto.viewmodels.BasvuruJuriViewModel>
+@{
 	ViewData["Title"] = "Başvuru Değerlendir";
 	Layout = "~/Areas/Juri/Views/Shared/_Layout.cshtml";
 }
+
 <div class="container-xxl flex-grow-1 container-p-y">
-	<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Jüri Paneli /</span> Başvuruları Değerlendir </h4>
-	<hr class="my-5" />
-	<!-- Tablo -->
-	<div class="card">
-		<div class="card-header d-flex justify-content-between">
-			<h5>Başvurular</h5>
-		</div>
-		<div class="card-body">
-			<div class="table-responsive text-nowrap">
-				<table class="table table-bordered">
-					<thead>
-						<tr style="text-align:center">
-							<th><b>İLAN</b></th>
-							<th style="width: 80px;"><b>UNVAN</b></th>
-							<th><b>İSİM</b></th>
-							<th><b>SOYİSİM</b></th>
-							<th style="width: 100px;"><b>DİĞER BİLGİLER</b></th>
-							<th style="width: 80px;"><b>DEĞERLENDİR</b></th>
-						</tr>
-					</thead>
-					<tbody>
- 						@foreach (var item in Model)
-						{
-							<tr style="text-align:center">
-								<td><b>@item.Ilan.Baslik</b></td>
-								<td><b>@item.Personel.Unvan.Isim</b></td>
-								<td><b>@item.Personel.Isim</b></td>
-								<td><b>@item.Personel.Soyisim</b></td>
-								<td>
-									<button class="btn btn-primary" onclick="showPopup('short', @item.Ilan_Id)">Görüntüle</button>
-								</td>
-								<td>
-									<form id="dosyaYukleForm" enctype="multipart/form-data">
-										<input type="file" id="dosya" name="dosya" />
-										<input type="hidden" id="basvuruId" name="basvuruId" value="1" /> <!-- Burada basvuruId'yi dinamik olarak atayabilirsiniz -->
-										<button type="submit">Dosya Yükle</button>
-									</form>
-								</td>
+	<div class="row">
+		<div class="col-12 col-lg-12 mb-4">
+			<div class="card">
+				<h5 class="card-header">Başvuru Listesi</h5>
+				<div class="table-responsive text-nowrap">
+					<table class="table table-striped text-center">
+						<thead>
+							<tr>
+								<th>İSİM SOYİSİM</th>
+								<th>E-POSTA</th>
+								<th>TELEFON</th>
+								<th>BAŞVURDUĞU İLAN</th>
+								<th>DEĞERLENDİRME BELGESİ</th>
 							</tr>
-						}
-					
- 					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							@foreach (var item in Model)
+							{
+								<tr>
+									<td>@item.Isim @item.Soyisim</td>
+									<td><a href="mailto:@item.Eposta">@item.Eposta</a></td>
+									<td><a href="tel:@item.Telefon">@item.Telefon</a></td>
+									<td>@item.IlanBaslik</td>
+									<td>
+										<form action="~/Juri/Degerlendir/Index" method="post" enctype="multipart/form-data">
+											<input type="hidden" name="Basvuru_Id" value="@item.BasvuruId" />
+											<div class="d-flex align-items-center gap-2">
+												<div class="form-group mb-0">
+													<input type="file" name="resim" class="form-control" />
+												</div>
+												<div class="form-group mb-0">
+													<button type="submit" class="btn btn-primary">Kaydet</button>
+												</div>
+											</div>
+
+										</form>
+									</td>
+								</tr>
+							}
+
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Popup -->
-	<div class="modal fade" id="popupModal" tabindex="-1" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Diğer Bilgiler</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
-				</div>
-				<div class="modal-body" id="popupContent"></div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Script -->
-
-	<div id="sonucMesaji"></div>
-
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-	<script>
-		$(document).ready(function () {
-			$('#dosyaYukleForm').submit(function (e) {
-				e.preventDefault(); // Sayfa yenilenmesini engelle
-
-				var formData = new FormData(this); // Form verilerini al
-
-				$.ajax({
-					url: '@Url.Action("DosyaYukleAjax", "ControllerAdı")', // Controller adı ve methodu belirtin
-					type: 'POST',
-					data: formData,
-					contentType: false, // Dosya yüklemesi olduğunda bu false olmalı
-					processData: false, // Dosya yüklemesi olduğunda bu false olmalı
-					success: function (response) {
-						if (response.success) {
-							$('#sonucMesaji').html('<div class="alert alert-success">Dosya başarıyla yüklendi! Dosya yolu: ' + response.dosyaYolu + '</div>');
-						} else {
-							$('#sonucMesaji').html('<div class="alert alert-danger">Hata: ' + response.message + '</div>');
-						}
-					},
-					error: function () {
-						$('#sonucMesaji').html('<div class="alert alert-danger">Bir hata oluştu.</div>');
-					}
-				});
-			});
-		});
-
-				function myFunction() {
-			console.log("Fonksiyon çalıştı.");
-		}
-		myFunction();  // Fonksiyonu çağırıyoruz
-
-	</script>
-
-
-	<script>
-		function showPopup(type, basvuruId) {
-			fetch(`/Admin/Basvuru/BasvuruGet/${basvuruId}`)
-				.then(response => response.json())
-				.then(data => {
-					console.log("Popup'a gelen veri:", data);
-					let content = type === 'short'
-						? (data.aciklama?.trim()?.length ? data.basvuruId : "Kısa açıklama bulunamadı.")
-						: (data.tarih?.trim()?.length ? data.tarih : "Açıklama bulunamadı.");
-
-					openPopup(content);
-				})
-				.catch(error => console.error("Hata:", error));
-		}
-		function editBasvuru(basvuruId) {
-			fetch(`/Admin/Basvuru/BasvuruGet/${basvuruId}`)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error("Servis bilgileri alınamadı");
-					}
-					return response.json();
-				})
-				.then(data => {
-					document.getElementById("editBasvuruId").value = data.basvuruId || "";
-					document.getElementById("editBaslik").value = data.baslik || "";
-					document.getElementById("editAciklama").value = data.aciklama || "";
-					document.getElementById("editTarih").value = data.tarih || "";
-					document.getElementById("editStatus").value = data.status || "";
-
-					// Modalı aç
-					new bootstrap.Modal(document.getElementById("updateModal")).show();
-				})
-				.catch(error => console.error("Hata:", error));
-		}
-		function saveEdit() {
-			var ilanId = document.getElementById("editIlanId").value;
-			var updatedData = {
-				Ilan_Id: ilanId,
-				Baslik: document.getElementById("editBaslik").value,
-				Aciklama: document.getElementById("editAciklama").value,
-				Tarih: document.getElementById("editTarih").value,
-				Status: document.getElementById("editStatus").value
-			};
-
-			fetch(`/Admin/Ilan/IlanUpdate`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(updatedData)
-			})
-			.then(response => response.json())
-			.then(data => {
-				if (data.success) {
-					alert("İlan başarıyla güncellendi!");
-					location.reload();
-				} else {
-					alert("Güncelleme başarısız!");
-				}
-			})
-			.catch(error => console.error("Hata:", error));
-
-			// Modalı kapat
-			var myModal = bootstrap.Modal.getInstance(document.getElementById("updateModal"));
-			myModal.hide();
-		}
-		function deleteIlan(ilanId) {
-			if (confirm("Bu ilanı silmek istediğinizden emin misiniz?")) {
-				fetch(`/Admin/Ilan/IlanDelete`, {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-					body: `id=${ilanId}`
-				})
-				.then(response => response.json())
-				.then(data => {
-					if (data.success) {
-						alert("İlan başarıyla silindi!");
-						location.reload();
-					} else {
-						alert("Silme işlemi başarısız!");
-					}
-				})
-				.catch(error => console.error('Hata:', error));
-			}
-		}
-		function openPopup(content) {
-			const popupContent = document.getElementById("popupContent");
-			popupContent.innerHTML = content;
-			new bootstrap.Modal(document.getElementById("popupModal")).show();
-		}
-		document.getElementById('addIlanModal').addEventListener('show.bs.modal', function (event) {
-			// Form verilerini temizle
-			document.getElementById('ilanForm').reset();
-		});
-	</script>
+</div>

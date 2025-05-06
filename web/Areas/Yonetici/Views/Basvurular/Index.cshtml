@@ -1,0 +1,106 @@
+﻿@model List<entity.Concrate.Basvuru>
+@{
+	ViewData["Title"] = "Başvuru İşlemleri";
+	Layout = "~/Areas/Yonetici/Views/Shared/_Layout.cshtml";
+}
+<div class="card">
+	<div class="card-header d-flex justify-content-between">
+		<h5>Başvurular</h5>
+	</div>
+	<div class="card-body">
+		<div class="table-responsive text-nowrap">
+			<table class="table table-bordered">
+				<thead>
+					<tr style="text-align:center">
+						<th><b>İLAN</b></th>
+						<th style="width: 80px;"><b>UNVAN</b></th>
+						<th><b>İSİM</b></th>
+						<th><b>SOYİSİM</b></th>
+						<th style="width: 80px;"><b>STATÜ</b></th>
+						<th style="width: 80px;"><b>YÖNLENDİR</b></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var basvuru in ViewBag.Basvurular)
+					{
+						<tr style="text-align:center">
+							<td>
+								<button class="btn btn-primary" onclick="openIlanModal('@basvuru.Ilan.Baslik', '@basvuru.Ilan.Aciklama')">Görüntüle</button>
+							</td>
+							@foreach (var personel in ViewBag.Personeller)
+							{
+
+								@if (basvuru.Personel_Id == personel.Personel_Id)
+									@foreach (var unvan in ViewBag.Unvanlar)
+									{
+										@if (unvan.Unvan_Id == personel.Unvan_Id)
+										{
+
+											<td>@unvan.Isim</td>
+										}
+									}
+							}
+							<td>@basvuru.Personel?.Isim</td>
+							<td>@basvuru.Personel?.Soyisim</td>
+							@foreach (var statu in ViewBag.BasvuruStatuleri)
+							{
+								@if (statu.BasvuruStatu_Id == basvuru.BasvuruStatu_Id)
+								{
+									<td>@statu.Statu</td>
+								}
+							}
+
+							<td>
+								<a class="btn" href="/Yonetici/Basvurular/Yonlendir/@basvuru.Basvuru_Id">
+									<i class="bx bx-user-plus"></i>
+								</a>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<!-- İlan Detayları Popup Modal -->
+<div class="modal fade" id="ilanModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">İlan Detayları</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+			</div>
+			<div class="modal-body">
+				<p id="ilanDetailsContent"></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Kapat</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	// İletişim bilgilerini Popup Modal'da gösteren fonksiyon
+	function openContactModal(eposta, telefon) {
+		const contactInfoContent = document.getElementById('contactInfoContent');
+		contactInfoContent.innerHTML = `
+			<strong>E-Posta Adresi:</strong> <a href="mailto:${eposta}">${eposta}</a><br><br>
+			<strong>Telefon Numarası:</strong> <a href="tel:${telefon}">${telefon}</a>
+		`;
+		// Modal'ı göster
+		new bootstrap.Modal(document.getElementById('contactModal')).show();
+	}
+
+	// İlan detaylarını Popup Modal'da gösteren fonksiyon
+	function openIlanModal(baslik, aciklama) {
+		const ilanDetailsContent = document.getElementById('ilanDetailsContent');
+		ilanDetailsContent.innerHTML = `
+			<strong>Başlık:</strong> ${baslik}<br><br>
+			<strong>Açıklama:</strong> ${aciklama}
+		`;
+		// Modal'ı göster
+		new bootstrap.Modal(document.getElementById('ilanModal')).show();
+	}
+</script>	

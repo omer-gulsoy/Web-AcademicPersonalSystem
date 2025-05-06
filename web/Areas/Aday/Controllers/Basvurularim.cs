@@ -1,10 +1,12 @@
 ﻿using data.Concrate;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace web.Areas.Aday.Controllers
 {
 	[Area("Aday")]
+	[Authorize(Roles = "ADAY")]
 	public class Basvurularim : Controller
 	{
 		Context Context = new Context();

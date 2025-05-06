@@ -1,8 +1,8 @@
-﻿@{
+﻿@model entity.Concrate.Contact
+@{
 	ViewData["Title"] = "İletişim";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <section class="contact-us" id="contact">
 	<div class="container">
 		<div class="row">
@@ -16,27 +16,27 @@
 								</div>
 								<div class="col-lg-3">
 									<fieldset>
-										<input name="name" type="text" id="name" placeholder="İSMİNİZ" required="">
+										<input Asp-For="Isim" name="Isim" id="isim" type="text" placeholder="İsminiz" required="">
 									</fieldset>
 								</div>
 								<div class="col-lg-3">
 									<fieldset>
-										<input name="surname" type="text" id="name" placeholder="SOYİSMİNİZ" required="">
+										<input Asp-For="Soyisim" name="Soyisim" id="soyisim" type="text" placeholder="Soyisminiz" required="">
 									</fieldset>
 								</div>
 								<div class="col-lg-3">
 									<fieldset>
-										<input name="email" type="text" id="email" pattern="[^ ]*[^ ]*" placeholder="E-POSTA ADRESİNİZ" required="">
+										<input Asp-For="Eposta" type="text" id="email" pattern="[^ ]*[^ ]*" placeholder="E-Posta Adresiniz" required="">
 									</fieldset>
 								</div>
 								<div class="col-lg-3">
 									<fieldset>
-										<input name="subject" type="text" id="subject" placeholder="KONU" required="">
+										<input Asp-For="Konu" name="Konu" id="konu" type="text" placeholder="İleti Konunuz" required="">
 									</fieldset>
 								</div>
 								<div class="col-lg-12">
 									<fieldset>
-										<textarea name="message" type="text" class="form-control" id="message" placeholder="İLETİNİZ" required=""></textarea>
+										<textarea Asp-For="Mesaj" type="text" class="form-control" id="message" placeholder="İletiniz" required=""></textarea>
 									</fieldset>
 								</div>
 								<div class="col-lg-12">
@@ -74,3 +74,55 @@
 		</div>
 	</div>
 </section>
+
+
+<script>
+	$(document).ready(function () {
+		var msg = '@ViewBag.Message';
+		if (msg) {
+			toastr.success(msg);
+		}
+	});
+
+
+	$(document).ready(function () {
+
+		function formatName(text) {
+			return text
+				.split(" ")
+				.filter(p => p.trim() !== "")
+				.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+				.join(" ");
+		}
+
+		function formatSurname(text) {
+			return text.toUpperCase();
+		}
+
+		function formatSubject(text) {
+			return text
+				.split(" ")
+				.filter(p => p.trim() !== "")
+				.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+				.join(" ");
+		}
+
+		$("#isim").on("input", function () {
+			let caret = this.selectionStart;
+			this.value = formatName(this.value);
+			this.setSelectionRange(caret, caret);
+		});
+
+		$("#soyisim").on("input", function () {
+			let caret = this.selectionStart;
+			this.value = formatSurname(this.value);
+			this.setSelectionRange(caret, caret);
+		});
+
+		$("#konu").on("input", function () {
+			let caret = this.selectionStart;
+			this.value = formatSubject(this.value);
+			this.setSelectionRange(caret, caret);
+		});
+	});
+</script>

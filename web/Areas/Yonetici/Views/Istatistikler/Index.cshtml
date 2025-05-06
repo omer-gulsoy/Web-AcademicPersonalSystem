@@ -1,0 +1,21 @@
+﻿@model List<entity.Concrate.Ilan>
+@{
+	var bgClasses = new[] { "bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info" };
+	var rand = new Random();
+	ViewData["Title"] = "Tüm İstatistikler";
+	Layout = "~/Areas/Yonetici/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+	@foreach (var item in Model)
+	{
+		var bgClass = bgClasses[rand.Next(bgClasses.Length)];
+		<div class="col-md-6 col-xl-4">
+			<div class="card @bgClass text-white mb-3" style="height:135px">
+				<div class="card-body">
+					<p style="text-align:center" class="card-text"><b>@item.Baslik</b></p><br />
+					<h5 class="card-title text-white">Başvuru Sayısı: @item.Basvurus.Count</h5>
+				</div>
+			</div>
+		</div>
+	}
+</div>

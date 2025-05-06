@@ -1,0 +1,109 @@
+﻿@{
+	var bgClasses = new[] { "bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info" };
+	var rand = new Random();
+	ViewData["Title"] = "Profil İşlemleri";
+	Layout = "~/Areas/Aday/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+	<div class="row">
+
+		<div class="col-md-6 col-lg-4 mb-3">
+			<div class="card h-100">
+				<div class="card-body text-center">
+					<h5 class="card-title">Araştırma Projesi</h5><br />
+					<a href="Arastirma/@ViewBag.PersonelId" class="btn btn-primary">Ekle</a>
+				</div>
+
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-4 mb-3">
+			<div class="card h-100">
+				<div class="card-body text-center">
+					<h5 class="card-title">Atıf</h5><br />
+					<a href="Atif/@ViewBag.PersonelId" class="btn btn-primary">Ekle</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-4 mb-3">
+			<div class="card h-100">
+				<div class="card-body text-center">
+					<h5 class="card-title">Bilimsel Toplantı</h5><br />
+					<a href="BilimselToplanti/@ViewBag.PersonelId" class="btn btn-primary">Ekle</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-4 mb-3">
+			<div class="card h-100">
+				<div class="card-body text-center">
+					<h5 class="card-title">Editörlük</h5><br />
+					<a href="Editorluk/@ViewBag.PersonelId" class="btn btn-primary">Ekle</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-4 mb-3">
+			<div class="card h-100">
+				<div class="card-body text-center">
+					<h5 class="card-title">Eğitim Öğretim Faaliyetleri</h5><br />
+					<a href="EoFaaliywti/@ViewBag.PersonelId" class="btn btn-primary">Ekle</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-4 mb-3">
+			<div class="card h-100">
+				<div class="card-body text-center">
+					<h5 class="card-title">Görev</h5><br />
+					<a href="Gorev/@ViewBag.PersonelId" class="btn btn-primary">Ekle</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-4 mb-3">
+			<div class="card h-100">
+				<div class="card-body text-center">
+					<h5 class="card-title">Kitap</h5><br />
+					<a href="Kitap/@ViewBag.PersonelId" class="btn btn-primary">Ekle</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-4 mb-3">
+			<div class="card h-100">
+				<div class="card-body text-center">
+					<h5 class="card-title">Konservatuar</h5><br />
+					<a href="Konservatuar/@ViewBag.PersonelId" class="btn btn-primary">Ekle</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-4 mb-3">
+			<div class="card h-100">
+				<div class="card-body text-center">
+					<h5 class="card-title">Makale</h5><br />
+					<a href="Makale/@ViewBag.PersonelId" class="btn btn-primary">Ekle</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-4 mb-3">
+			<div class="card h-100">
+				<div class="card-body text-center">
+					<h5 class="card-title">Ödül</h5><br />
+					<a href="Odul/@ViewBag.PersonelId" class="btn btn-primary">Ekle</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-4 mb-3">
+			<div class="card h-100">
+				<div class="card-body text-center">
+					<h5 class="card-title">Patent</h5><br />
+					<a href="Patent/@ViewBag.PersonelId" class="btn btn-primary">Ekle</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-4 mb-3">
+			<div class="card h-100">
+				<div class="card-body text-center">
+					<h5 class="card-title">Tez Yöneticiliği</h5><br />
+					<a href="TezYoneticiligi/@ViewBag.PersonelId" class="btn btn-primary">Ekle</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

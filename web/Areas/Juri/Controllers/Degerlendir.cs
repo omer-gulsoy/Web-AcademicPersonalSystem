@@ -1,64 +1,90 @@
 ﻿using data.Concrate;
+using dto.viewmodels;
 using entity.Concrate;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace web.Areas.Juri.Controllers
 {
 	[Area("Juri")]
+	[Authorize(Roles = "JURI")]
 	public class Degerlendir : Controller
 	{
 		Context Context = new Context();
 		[HttpGet]
 		public IActionResult Index()
 		{
-			var degerler = Context.Basvurus
-			.Include(b => b.Ilan)       // İlan'ı dahil et
-			.Include(b => b.BasvuruStatu)
-			.Include(b => b.Personel)   // Personel'i dahil et)
-			.ThenInclude(p => p.Unvan) // Personel'den Unvan'ı dahil et
-			.OrderBy(x => x.Ilan_Id)
-			.ToList();
-			return View(degerler);
+			var userTc = User.Identity.Name;
+			var personelId = Context.Personels
+				.Where(p => p.TC == userTc)
+				.Select(p => p.Personel_Id)
+				.FirstOrDefault();
+
+			var model = Context.BasvuruYonlendirs
+				.Include(x => x.Basvuru)
+					.ThenInclude(b => b.Personel)
+				.Include(x => x.Basvuru)
+					.ThenInclude(b => b.Ilan)
+				.Where(x => x.Personel_Id == personelId)
+				.Select(x => new BasvuruJuriViewModel
+				{
+					BasvuruId = x.Basvuru_Id.Value,
+					Isim = x.Basvuru.Personel.Isim,
+					Soyisim = x.Basvuru.Personel.Soyisim,
+					Eposta = x.Basvuru.Personel.Eposta,
+					Telefon = x.Basvuru.Personel.Telefon,
+					IlanBaslik = x.Basvuru.Ilan.Baslik,
+					DosyaYolu = Context.DegerlendirmeBelges
+						.Where(d => d.Basvuru_Id == x.Basvuru_Id && d.Personel_Id == personelId)
+						.Select(d => d.DosyaYolu)
+						.FirstOrDefault()
+				})
+				.ToList();
+
+			return View(model);
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> DosyaYukleAjax(IFormFile dosya, int basvuruId)
+		public IActionResult Index(IFormFile resim, int Basvuru_Id)
 		{
-			if (dosya != null && dosya.Length > 0)
+			if (resim == null || resim.Length == 0)
 			{
-				// Dosyanın uzantısını al
-				var dosyaUzantisi = Path.GetExtension(dosya.FileName);
-
-				// Benzersiz bir dosya adı oluştur (Guid kullanarak)
-				var yeniDosyaAdi = Guid.NewGuid().ToString() + dosyaUzantisi;
-
-				// Dosyanın kaydedileceği yolu belirle
-				var dosyaYolu = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "belgeler", "degerlendirme_belgeleri", yeniDosyaAdi);
-
-				// Dosyayı kaydet
-				using (var stream = new FileStream(dosyaYolu, FileMode.Create))
-				{
-					await dosya.CopyToAsync(stream);
-				}
-
-				// Veritabanına dosya yolunu ve diğer bilgileri ekle
-				var degerlendirmeBelge = new DegerlendirmeBelge
-				{
-					DosyaYolu = "/belgeler/degerlendirme_belgeleri/" + yeniDosyaAdi,
-					Basvuru_Id = basvuruId,
-					Personel_Id = 4
-				};
-
-				// Veritabanına ekleme işlemi
-				Context.DegerlendirmeBelges.Add(degerlendirmeBelge);
-				await Context.SaveChangesAsync();
-
-				// Başarılı olduğunda JSON döndür
-				return Json(new { success = true, dosyaYolu = degerlendirmeBelge.DosyaYolu });
+				TempData["Error"] = "Dosya seçilmedi.";
+				return RedirectToAction("Index", "Home"); // Formdan sonra dönülecek yer
 			}
 
-			return Json(new { success = false, message = "Dosya yüklenemedi." });
+			// 1. TC'den personel ID'yi bul
+			var userTc = User.Identity.Name;
+			var personelId = Context.Personels
+				.Where(p => p.TC == userTc)
+				.Select(p => p.Personel_Id)
+				.FirstOrDefault();
+
+			// 2. Dosya ismi benzersiz hale getir
+			var uzanti = Path.GetExtension(resim.FileName);
+			var benzersizAd = Guid.NewGuid().ToString() + uzanti;
+			var kayitYolu = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "dosyalar", benzersizAd);
+
+			// 3. Dosyayı kaydet
+			using (var stream = new FileStream(kayitYolu, FileMode.Create))
+			{
+				resim.CopyTo(stream);
+			}
+
+			// 4. Veritabanına kayıt
+			var belge = new DegerlendirmeBelge
+			{
+				DosyaYolu = "/dosyalar/" + benzersizAd,
+				Basvuru_Id = Basvuru_Id,
+				Personel_Id = personelId
+			};
+
+			Context.DegerlendirmeBelges.Add(belge);
+			Context.SaveChanges();
+
+			TempData["Success"] = "Dosya başarıyla yüklendi.";
+			return RedirectToAction("Index", "Home"); // Dönüş yapılacak yer
 		}
 
 

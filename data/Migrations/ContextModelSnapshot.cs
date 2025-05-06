@@ -166,6 +166,9 @@ namespace data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("BirthYear")
+                        .HasColumnType("int");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -362,10 +365,10 @@ namespace data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BasvuruYonlendir_Id"));
 
-                    b.Property<int>("Basvuru_Id")
+                    b.Property<int?>("Basvuru_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Personel_Id")
+                    b.Property<int?>("Personel_Id")
                         .HasColumnType("int");
 
                     b.HasKey("BasvuruYonlendir_Id");
@@ -1163,15 +1166,11 @@ namespace data.Migrations
                 {
                     b.HasOne("entity.Concrate.Basvuru", "Basvuru")
                         .WithMany("BasvuruYonlendirs")
-                        .HasForeignKey("Basvuru_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Basvuru_Id");
 
                     b.HasOne("entity.Concrate.Personel", "Personel")
                         .WithMany("BasvuruYonlendirs")
-                        .HasForeignKey("Personel_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Personel_Id");
 
                     b.Navigation("Basvuru");
 

@@ -2,89 +2,102 @@
 	ViewData["Title"] = "Anasayfa";
 	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<div class="container-xxl flex-grow-1 container-p-y">
-	<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Admin Paneli /</span> Anasayfa </h4>
-	<hr class="my-5" />
-	<div class="row">
-		<!-- Total Revenue -->
-		<div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
+<div class="row">
+	<!-- Total Revenue -->
+	<div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
+		<div class="card">
+
+			<!-- Striped Rows -->
 			<div class="card">
-
-				<!-- Striped Rows -->
-				<div class="card">
-					<h5 class="card-header"><i class="menu-icon tf-icons bx bx-edit"></i>Başvuru Listesi</h5>
-					<div class="table-responsive text-nowrap">
-						<table style="text-align:center" class="table table-striped">
-							<thead>
+				<h5 class="card-header"><i class="menu-icon tf-icons bx bx-edit"></i>Başvuru Listesi</h5>
+				<div class="table-responsive text-nowrap">
+					<table style="text-align:center" class="table table-striped">
+						<thead>
+							<tr>
+								<th>İSİM SOYİSİM</th>
+								<th>İLETİŞİM BİLGİLERİ</th>
+								<th>BAŞVURDUĞU İLAN</th>
+							</tr>
+						</thead>
+						<tbody class="table-border-bottom-0">
+							@foreach (var satir in ViewBag.Basvurular)
+							{
 								<tr>
-									<th>İSİM SOYİSİM</th>
-									<th>İLETİŞİM BİLGİLERİ</th>
-									<th>BAŞVURDUĞU İLANLAR</th>
-								</tr>
-							</thead>
-							<tbody class="table-border-bottom-0">
-								@foreach (var satir in ViewBag.Basvurular)
-								{
-									<tr>
-										<td style="text-align:left">
-											<i class="fab fa-angular fa-lg text-danger me-3"></i>
-											<strong>@satir.Personel.Isim @satir.Personel.Soyisim</strong>
-										</td>
-										<td>
+									<td style="text-align:left">
+										<i class="fab fa-angular fa-lg text-danger me-3"></i>
+										<strong>
+											@(satir.Personel != null ? satir.Personel.Isim + " " + satir.Personel.Soyisim : "Bilinmiyor")
+										</strong>
+									</td>
+									<td>
+										@if (satir.Personel != null)
+										{
 											<button class="btn btn-primary" onclick="openContactModal('@satir.Personel.Eposta', '@satir.Personel.Telefon')">Görüntüle</button>
-										</td>
-										<td>
+										}
+										else
+										{
+											<span class="text-muted">Bilgi yok</span>
+										}
+									</td>
+									<td>
+										@if (satir.Ilan != null)
+										{
 											<button class="btn btn-primary" onclick="openIlanModal('@satir.Ilan.Baslik', '@satir.Ilan.Aciklama')">Görüntüle</button>
-										</td>
-									</tr>
-								}
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<!--/ Striped Rows -->
-			</div>
-		</div>
-		<!--/ Total Revenue -->
-		<div class="col-md-6 col-lg-4 order-2 mb-4">
-			<div class="card h-100">
-				<div class="card-header d-flex align-items-center justify-content-between">
-					<h5 class="card-title m-0 me-2"><i class="menu-icon tf-icons bx bx-news"></i>İlanlar</h5>
-					<div class="dropdown">
-						<button class="btn p-0"
-								type="button"
-								id="transactionID"
-								data-bs-toggle="dropdown"
-								aria-haspopup="true"
-								aria-expanded="false">
-							<i class="bx bx-dots-vertical-rounded"></i>
-						</button>
-						<div class="dropdown-menu dropdown-menu-end" aria-labelledby="transactionID">
-							<a class="dropdown-item" href="~/Ilan/Index">Kullanıcı gözü</a>
-							<a class="dropdown-item" href="~/Admin/Ilan/Index">Düzenle</a>
-						</div>
-					</div>
-				</div>
-				<div class="card-body">
-					<ul class="p-0 m-0">
-						@foreach (var ilan in ViewBag.Ilanlar)
-						{
-							<li class="d-flex mb-4 pb-1">
-								<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-									<div class="me-2">
-										<a href="~/Admin/Ilan/Index">
-											<h6 class="mb-0">@ilan.Baslik</h6>
-										</a>
-									</div>
-									<div class="user-progress d-flex align-items-center gap-1">
-										<span class="text-muted">@ilan.Tarih.ToString("dd MMM yyyy")</span>
-									</div>
-								</div>
-							</li>
+										}
+										else
+										{
+											<span class="text-muted">İlan yok</span>
+										}
+									</td>
+								</tr>
+							}
+						</tbody>
 
-						}
-					</ul>
+					</table>
 				</div>
+			</div>
+			<!--/ Striped Rows -->
+		</div>
+	</div>
+	<!--/ Total Revenue -->
+	<div class="col-md-6 col-lg-4 order-2 mb-4">
+		<div class="card h-100">
+			<div class="card-header d-flex align-items-center justify-content-between">
+				<h5 class="card-title m-0 me-2"><i class="menu-icon tf-icons bx bx-news"></i>İlanlar</h5>
+				<div class="dropdown">
+					<button class="btn p-0"
+							type="button"
+							id="transactionID"
+							data-bs-toggle="dropdown"
+							aria-haspopup="true"
+							aria-expanded="false">
+						<i class="bx bx-dots-vertical-rounded"></i>
+					</button>
+					<div class="dropdown-menu dropdown-menu-end" aria-labelledby="transactionID">
+						<a class="dropdown-item" href="~/Ilan/Index">Kullanıcı gözü</a>
+						<a class="dropdown-item" href="~/Admin/Ilan/Index">Düzenle</a>
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<ul class="p-0 m-0">
+					@foreach (var ilan in ViewBag.Ilanlar)
+					{
+						<li class="d-flex mb-4 pb-1">
+							<div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+								<div class="me-2">
+									<a href="~/Admin/Ilan/Index">
+										<h6 class="mb-0">@ilan.Baslik</h6>
+									</a>
+								</div>
+								<div class="user-progress d-flex align-items-center gap-1">
+									<span class="text-muted">@ilan.Tarih.ToString("dd MMM yyyy")</span>
+								</div>
+							</div>
+						</li>
+
+					}
+				</ul>
 			</div>
 		</div>
 	</div>

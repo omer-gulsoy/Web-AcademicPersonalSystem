@@ -1,0 +1,47 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model entity.Concrate.BasvuruYonlendir
+@if (TempData["Success"] != null)
+{
+	<div class="alert alert-success">
+		@TempData["Success"]
+	</div>
+}
+
+@{
+	ViewData["Title"] = "Başvuruyu Jüriye Yönlendirme";
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="card mb-4">
+			<div class="card-header d-flex justify-content-between align-items-center">
+				<h5 class="mb-0">Yönlendirme Formu</h5>
+			</div>
+			<div class="card-body">
+                <form asp-action="Yonlendir" method="post">
+                    <div style="display: none;" class="mb-3">
+                        <input type="number" class="form-control" asp-for="Basvuru_Id" style="display: none;" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Personel_Id" class="form-label">Jüri Seçiniz</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text"><i class="bx bx-user"></i></span>
+                            <select asp-for="Personel_Id" class="form-control">
+                                <option value="">Jüri Seçiniz</option>
+                                @foreach (var personel in ViewBag.JuriPersoneller)
+                                {
+                                    <option value="@personel.PersonelId">@personel.Isim @personel.Soyisim</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">YÖNLENDİR</button>
+                </form>
+
+			</div>
+		</div>
+	</div>
+</div>

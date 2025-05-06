@@ -1,0 +1,51 @@
+﻿@{
+	ViewData["Title"] = "Editörlük";
+	Layout = "~/Areas/Aday/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper">
+	<div class="container-xxl flex-grow-1 container-p-y">
+		<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Aday Paneli/</span> Editörlük</h4>
+		<div class="row">
+			<div class="col-xl-8 mx-auto">
+				<div class="card mb-4">
+					<div class="card-header d-flex justify-content-between align-items-center">
+						<h5 class="mb-0">Basic Layout</h5>
+					</div>
+					<div class="card-body">
+						<form>
+							<div class="mb-3">
+								<label class="form-label" for="basic-default-fullname">Full Name</label>
+								<input type="text" class="form-control" id="basic-default-fullname" />
+							</div>
+							<div class="mb-3">
+								<label class="form-label" for="basic-default-company">Company</label>
+								<input type="text" class="form-control" id="basic-default-company" />
+							</div>
+							<div class="mb-3">
+								<label class="form-label" for="basic-default-email">Email</label>
+								<div class="input-group input-group-merge">
+									<input type="text"
+										   id="basic-default-email"
+										   class="form-control"
+								</div>
+							</div>
+							<div class="mb-3">
+								<label class="form-label" for="basic-default-phone">Phone No</label>
+								<input type="text"
+									   class="form-control phone-mask" />
+							</div>
+							<div class="mb-3">
+								<label class="form-label" for="basic-default-message">Message</label>
+								<textarea id="basic-default-message"
+										  class="form-control"></textarea>
+							</div>
+							<div class="text-center">
+								<button type="submit" class="btn btn-primary">Kaydet</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

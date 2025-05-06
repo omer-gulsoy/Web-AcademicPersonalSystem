@@ -1,22 +1,34 @@
 ﻿using dto.dtos.AppUserDtos;
 using entity.Concrate;
+using KPSPublic;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
+using System.Globalization;
+using KPSPublic;
+using data.Concrate;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MailKit.Security; // Connected Service namespace
 
 namespace web.Controllers
 {
 	public class RegisterController : Controller
 	{
 		private readonly UserManager<AppUser> _userManager;
-		public RegisterController(UserManager<AppUser> userManager)
+		private readonly data.Concrate.Context _context;
+		public RegisterController(UserManager<AppUser> userManager, data.Concrate.Context context)
 		{
 			_userManager = userManager;
+			_context = context;
 		}
+
 		[HttpGet]
 		public IActionResult Index()
 		{
+
+			var unvanlar = _context.Unvans.ToList();
+			ViewBag.UnvanList = new SelectList(unvanlar, "Unvan_Id", "Isim");
 			return View();
 		}
 
@@ -25,31 +37,71 @@ namespace web.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				// 🔐 TC Kimlik Doğrulama
+				try
+				{
+					var client = new KPSPublicSoapClient(KPSPublicSoapClient.EndpointConfiguration.KPSPublicSoap);
+					var result = await client.TCKimlikNoDogrulaAsync(
+						Convert.ToInt64(appUserRegisterDto.UserName),
+						appUserRegisterDto.Name.ToUpper(new CultureInfo("tr-TR")),
+						appUserRegisterDto.Surname.ToUpper(new CultureInfo("tr-TR")),
+						appUserRegisterDto.BirthYear
+					);
+
+					if (!result.Body.TCKimlikNoDogrulaResult)
+					{
+						ModelState.AddModelError("", "T.C. Kimlik, Ad, Soyad, Doğum yılı bilgileri uyuşmuyor.");
+						return View();
+					}
+				}
+				catch (Exception ex)
+				{
+					ModelState.AddModelError("", "Kimlik doğrulama servisine ulaşılamadı: " + ex.Message);
+					return View();
+				}
+
 				AppUser appUser = new AppUser
 				{
 					UserName = appUserRegisterDto.UserName,
 					Email = appUserRegisterDto.Email,
 					Name = appUserRegisterDto.Name,
 					Surname = appUserRegisterDto.Surname,
-
+					BirthYear = appUserRegisterDto.BirthYear,
 				};
-				var result = await _userManager.CreateAsync(appUser, appUserRegisterDto.Password);
-				if (result.Succeeded)
+
+				var resultUser = await _userManager.CreateAsync(appUser, appUserRegisterDto.Password);
+				if (resultUser.Succeeded)
 				{
+					await _userManager.AddToRoleAsync(appUser, "ADAY");
+
+					// ➕ BURAYA EKLE
+					Personel personel = new Personel
+					{
+						Isim = appUserRegisterDto.Name,
+						Soyisim = appUserRegisterDto.Surname,
+						TC = appUserRegisterDto.UserName,
+						Eposta = appUserRegisterDto.Email,
+						Status = true,
+						Telefon = appUserRegisterDto.PhoneNumber, // varsa
+						Unvan_Id = appUserRegisterDto.Unvan_Id, // örnek
+					};
+
+					_context.Personels.Add(personel);
+					await _context.SaveChangesAsync();
 					//kullanıcıya gönderilen e-posta
 					MimeMessage mimeMessage = new MimeMessage();
-					MailboxAddress mailboxAddressFrom = new MailboxAddress("Dershane", "o.hasan.41.41@gmail.com");
-					MailboxAddress mailboxAddressTo = new MailboxAddress("Yeni Kullanıcı", appUser.Email);
+					MailboxAddress mailboxAddressFrom = new MailboxAddress("Akademik Personel Sistemi", "o.hasan.41.41@gmail.com");
+					MailboxAddress mailboxAddressTo = new MailboxAddress("Yeni Kullanıcı", appUserRegisterDto.Email);
 					mimeMessage.From.Add(mailboxAddressFrom);
 					mimeMessage.To.Add(mailboxAddressTo);
 					var bodyBuilder = new BodyBuilder();
-					bodyBuilder.TextBody = "Dershane sistemine kayıt başvurunuz başarıyla gerçekleşmiştir. Sistem yöenticimiz tarafından başvurunuz incelenecektir. Başvurunuzun onaylanması halinde sisteme giriş sağlayabileceksiniz.\nZeka Atölyesi Eğitim Kurumu\nTeşekkürler.";
+					bodyBuilder.TextBody = "Akademik Personel Sistemine kayıt başvurunuz başarıyla gerçekleşmiştir. Sistem yöenticimiz tarafından başvurunuz incelenecektir. Başvurunuzun onaylanması halinde sisteme giriş sağlayabileceksiniz.\nZeka Atölyesi Eğitim Kurumu\nTeşekkürler.";
 					mimeMessage.Body = bodyBuilder.ToMessageBody();
-					mimeMessage.Subject = "Dershane sistemine kayıt başvurusu.";
+					mimeMessage.Subject = "Akademik Personel Sistemine kayıt başvurusu.";
 
 					//yöneticiye gönderilen e-posta
 					MimeMessage mimeMessage2 = new MimeMessage();
-					MailboxAddress mailboxAddressFrom2 = new MailboxAddress("Dershane", "o.hasan.41.41@gmail.com");
+					MailboxAddress mailboxAddressFrom2 = new MailboxAddress("Akademik Personel Sistemi", "o.hasan.41.41@gmail.com");
 					MailboxAddress mailboxAddressTo2 = new MailboxAddress("Yönetici", "omerhasangulsoy@hotmail.com");
 					mimeMessage2.From.Add(mailboxAddressFrom2);
 					mimeMessage2.To.Add(mailboxAddressTo2);
@@ -59,18 +111,18 @@ namespace web.Controllers
 					mimeMessage2.Subject = "Dershane sistemine yeni kayıt eklendi.";
 
 					//gönderim işlemi sağlayıcısı
-					SmtpClient client = new SmtpClient();
-					client.Connect("smtp.gmail.com", 587, false);
-					client.Authenticate("o.hasan.41.41@gmail.com", "mnkvwyooiduvxbdt");
-					client.Send(mimeMessage);
-					client.Send(mimeMessage2);
-					client.Disconnect(true);
+					SmtpClient clientMail = new SmtpClient();
+					clientMail.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+					clientMail.Authenticate("o.hasan.41.41@gmail.com", "mnkvwyooiduvxbdt");
+					clientMail.Send(mimeMessage);
+					clientMail.Send(mimeMessage2);
+					clientMail.Disconnect(true);
 
 					return RedirectToAction("Index", "Login");
 				}
 				else
 				{
-					foreach (var item in result.Errors)
+					foreach (var item in resultUser.Errors)
 					{
 						ModelState.AddModelError("", item.Description);
 					}

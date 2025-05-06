@@ -1,0 +1,39 @@
+﻿@model List<entity.Concrate.DegerlendirmeBelge>
+@{
+	ViewData["Title"] = "Tüm Değerlendirmeler";
+	Layout = "~/Areas/Yonetici/Views/Shared/_Layout.cshtml";
+}
+<!-- Bordered Table -->
+<div class="card">
+	<div class="card-header d-flex justify-content-between">
+		<h5>Jüri Değerlendirmeleri</h5>
+	</div>
+	<div class="card-body">
+		<div class="table-responsive text-nowrap">
+			<table class="table table-bordered">
+				<thead>
+					<tr style="text-align:center">
+						<th><b>İLAN BAŞLIĞI</b></th>
+						<th><b>İLAN AÇIKLAMASI</b></th>
+						<th><b>DEĞERLENDİREN JÜRİ</b></th>
+						<th style="width: 80px;"><b>GÖRÜNTÜLE</b></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model)
+					{
+						<tr style="text-align:center">
+							<td>@item.Basvuru.Ilan.Baslik</td>
+							<td>@item.Basvuru.Ilan.Aciklama</td>
+							<td><b>@item.Personel.Unvan.Isim </b>@item.Personel.Isim @item.Personel.Soyisim</td>
+							<td>
+								<a class="btn btn-primary" href="@item.DosyaYolu" target="_blank">Görüntüle</a>
+							</td>
+
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

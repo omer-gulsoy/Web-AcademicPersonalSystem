@@ -13,10 +13,10 @@ namespace entity.Concrate
 		[Key]
 		public int BasvuruYonlendir_Id { get; set; }
 		[ForeignKey("Basvuru")]
-		public int Basvuru_Id { get; set; }
+		public int? Basvuru_Id { get; set; }
 		public Basvuru? Basvuru { get; set; }
 		[ForeignKey("Personel")]
-		public int Personel_Id { get; set; }
+		public int? Personel_Id { get; set; }
 		public Personel? Personel { get; set; }
 	}
 }

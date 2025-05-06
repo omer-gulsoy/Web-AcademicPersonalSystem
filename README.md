@@ -17,12 +17,21 @@ Bu proje, Akademik personel alım süreçlerini dijitalleştirmek amacıyla geli
 | Rol      | Yetkiler ve İşlevler |
 |----------|----------------------|
 | **Aday** | Aktif ilanları görüntüleyebilir, başvuru yapabilir, belgeleri yükleyebilir, başvuru sürecini takip edebilir. "Şifremi Unuttum" seçeneğiyle şifresini sıfırlayabilir. |
-
-![image](https://github.com/user-attachments/assets/4d310a9a-3f1b-431c-94f7-4b8e16f7e50e)
-
 | **Yönetici** | Yeni ilan oluşturabilir, jüri atayabilir, başvuruları yönetebilir, istatistiksel verilere erişebilir. |
 | **Jüri** | Kendisine atanan adayların belgelerini inceler, puanlama yapar, değerlendirmeyi sisteme yükler. |
 | **Admin** | Tüm kullanıcıları ve ilanları yönetir, sistem güvenliği ve yetkilendirme ayarlarını kontrol eder. |
+
+![image](https://github.com/user-attachments/assets/85707963-e6c3-4b59-871c-ed5c6e05bbca)
+
+![image](https://github.com/user-attachments/assets/a9ac5a91-292d-4fd8-ae5c-bb49a54e4b52)
+
+![image](https://github.com/user-attachments/assets/d9037150-2bb7-4da6-8be7-0fa7f513221d)
+
+![image](https://github.com/user-attachments/assets/e18a7d92-af00-4bd9-88d6-6e8b2586fa48)
+
+![image](https://github.com/user-attachments/assets/c8517c02-76c1-4abf-af4e-5300a3ba2a76)
+
+
 
 ---
 
@@ -45,10 +54,12 @@ Bu proje, Akademik personel alım süreçlerini dijitalleştirmek amacıyla geli
 
 - **Microsoft SQL Server (MSSQL)**
   - Entity Framework Core (ORM)
-    ![image](https://github.com/user-attachments/assets/75de6690-5cdb-44db-9086-faccc20c18b6)
+  - 
+  ## 📊 Veritabanı Diyagramı
 
-  
----
+Aşağıda sistemin temel UML veritabanı yapısı görselleştirilmiştir:
+
+![UML Şeması](https://raw.githubusercontent.com/DeryaGelmez/AkademikPersonel/main/images/UML.png)
 
 
 ### 🔐 Kimlik Doğrulama ve Güvenlik
@@ -75,13 +86,10 @@ Bu proje, Akademik personel alım süreçlerini dijitalleştirmek amacıyla geli
 
 > Proje ASP.NET Core MVC tabanlıdır. .NET 6 veya üzeri kurulu olmalıdır.
 
+---
 
-## Proje Raporu
+## 📄 Proje Raporu
 📄 [Grup 17 Proje Raporu](Grup%2017%20Rapor.pdf)
-
-
-
-
 
 
 

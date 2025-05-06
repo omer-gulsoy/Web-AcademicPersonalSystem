@@ -3,7 +3,12 @@
 @await Html.PartialAsync("Components/_HeadPartial")
 <body>
 	@await Html.PartialAsync("Components/_NavbarPartial")
- 	@RenderBody()
+
+	<div class="container-xxl flex-grow-1 container-p-y">
+		<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Yönetici Paneli /</span> @ViewData["Title"]</h4>
+		<hr class="my-5" />
+		@RenderBody()
+	</div>
 	@await Html.PartialAsync("Components/_FooterPartial")
 	@await Html.PartialAsync("Components/_ScriptPartial")
 </body>

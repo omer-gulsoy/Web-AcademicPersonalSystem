@@ -7,22 +7,33 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Data\**" />
+    <Compile Remove="Areas\Admin\Models\**" />
+    <Compile Remove="Areas\Yonetici\Data\**" />
+    <Compile Remove="Areas\Yonetici\Models\**" />
+    <Compile Remove="wwwroot\belgeler\**" />
+    <Content Remove="Areas\Admin\Data\**" />
+    <Content Remove="Areas\Admin\Models\**" />
+    <Content Remove="Areas\Yonetici\Data\**" />
+    <Content Remove="Areas\Yonetici\Models\**" />
+    <Content Remove="wwwroot\belgeler\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\**" />
+    <EmbeddedResource Remove="Areas\Yonetici\Data\**" />
+    <EmbeddedResource Remove="Areas\Yonetici\Models\**" />
+    <EmbeddedResource Remove="wwwroot\belgeler\**" />
+    <None Remove="Areas\Admin\Data\**" />
+    <None Remove="Areas\Admin\Models\**" />
+    <None Remove="Areas\Yonetici\Data\**" />
+    <None Remove="Areas\Yonetici\Models\**" />
+    <None Remove="wwwroot\belgeler\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Views\Shared\kocaeli.mp4">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Aday\Data\" />
-    <Folder Include="Areas\Aday\Models\" />
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Juri\Data\" />
-    <Folder Include="Areas\Juri\Models\" />
-    <Folder Include="Areas\Yonetici\Data\" />
-    <Folder Include="Areas\Yonetici\Models\" />
-    <Folder Include="wwwroot\belgeler\degerlendirme_belgeleri\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,6 +58,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="6.0.*" />
+    <PackageReference Include="System.ServiceModel.Federation" Version="6.0.*" />
+    <PackageReference Include="System.ServiceModel.Http" Version="6.0.*" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="6.0.*" />
+    <PackageReference Include="System.ServiceModel.Security" Version="6.0.*" />
   </ItemGroup>
 
   <ItemGroup>

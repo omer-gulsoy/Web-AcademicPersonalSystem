@@ -1,10 +1,12 @@
 ﻿using data.Concrate;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace web.Areas.Aday.Controllers
 {
 	[Area("Aday")]
+	[Authorize(Roles = "ADAY")]
 	public class HomeController : Controller
 	{
 		Context Context = new Context();
@@ -20,7 +22,7 @@ namespace web.Areas.Aday.Controllers
 							.FirstOrDefault();
 
 			ViewBag.Basvurular = Context.Basvurus.Where(x => x.Personel_Id == personelId).Include(x => x.Ilan).ToList();
-			ViewBag.Ilanlar = Context.Ilans.Take(10).ToList();
+			ViewBag.Ilanlar = Context.Ilans.Where(x => x.Status == true).Take(10).ToList();
 			return View();
 		}
 	}

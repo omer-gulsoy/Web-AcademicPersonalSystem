@@ -1,10 +1,12 @@
 ﻿using data.Concrate;
 using entity.Concrate;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace web.Areas.Admin.Controllers
 {
 	[Area("Admin")]
+	[Authorize(Roles = "ADMIN")]
 	public class IlanController : Controller
 	{
 		Context Context = new Context();

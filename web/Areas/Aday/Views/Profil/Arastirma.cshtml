@@ -1,0 +1,58 @@
+﻿@model entity.Concrate.ArastirmaProjesi
+
+@{
+    ViewData["Title"] = "Araştırma";
+    Layout = "~/Areas/Aday/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Aday Paneli/</span> Araştırma Projesi</h4>
+        <div class="row">
+            <div class="col-xl-8 mx-auto">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Araştırma Projesi Ekle</h5>
+                    </div>
+                    @foreach (var item in ViewBag.Goster)
+                    {
+                        @item.Katsayi_Id
+                    }
+
+                    <div class="card-body">
+                        <form asp-action="Ekle" method="post">
+                            <div class="mb-3">
+                                <input asp-for="Isim" class="form-control" placeholder="İsim" />
+                            </div>
+                            <div class="mb-3">
+                                <input asp-for="No" class="form-control" placeholder="Numara" />
+                            </div>
+                            <div class="mb-3">
+                                <input asp-for="KurumIsmi" class="form-control" placeholder="Kurum İsmi" />
+                            </div>
+                            <div class="mb-3">
+                                <input asp-for="Yil" class="form-control" placeholder="Yıl" />
+                            </div>
+                            <div class="mb-3">
+                                <input asp-for="Puan" class="form-control" placeholder="Puan" />
+                            </div>
+                            <div class="mb-3">
+                                <input asp-for="Personel_Id" class="form-control" type="hidden" placeholder="Personel ID" />
+                            </div>
+                            <div class="mb-3">
+                                <input asp-for="Puanlama_Id" class="form-control" placeholder="Puanlama ID" />
+                            </div>
+                            <div class="mb-3">
+                                <input asp-for="Katsayi_Id" class="form-control" placeholder="Katsayı ID" />
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Kaydet</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

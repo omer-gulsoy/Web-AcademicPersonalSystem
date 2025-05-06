@@ -1,0 +1,96 @@
+﻿@model List<entity.Concrate.Personel>
+@{
+	ViewData["Title"] = "Tüm Jüriler";
+	Layout = "~/Areas/Yonetici/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Bordered Table -->
+<div class="card">
+	<div class="card-header d-flex justify-content-between">
+		<h5>Jürlier</h5>
+		<!-- Yeni ilan ekleme butonu -->
+		<button class="btn" data-bs-toggle="modal" data-bs-target="#addIlanModal">
+			<i class="bx bx-plus-circle"></i>
+		</button>
+	</div>
+	<div class="card-body">
+		<div class="table-responsive text-nowrap">
+			<table class="table table-bordered">
+				<thead>
+					<tr style="text-align:center">
+						<th><b>İSİM</b></th>
+						<th><b>SOYİSİM</b></th>
+						<th><b>TC</b></th>
+						<th><b>Telefon Numarası</b></th>
+						<th><b>E-Posta Adresi</b></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model)
+					{
+						<tr style="text-align:center">
+							<td>@item.Isim</td>
+							<td>@item.Soyisim</td>
+							<td>@item.TC</td>
+							<td><a href="tel:@item.Telefon">@item.Telefon</a></td>
+							<td><a href="mailto:@item.Eposta">@item.Eposta</a></td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+<!-- Add Juri Modal -->
+<div class="modal fade" id="addIlanModal" tabindex="-1" aria-labelledby="addIlanModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addIlanModalLabel">Yeni Jüri Ata</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+			</div>
+			<div class="modal-body">
+				<select class="form-select" id="personelSec">
+					<option selected disabled>Jüri yapmak için personel seçin</option>
+					@foreach (var personel in ViewBag.PersonelList as List<entity.Concrate.Personel>)
+					{
+						<option value="@personel.Personel_Id">@personel.Isim @personel.Soyisim - @personel.TC</option>
+					}
+				</select>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+				<button type="button" class="btn btn-primary" id="juriAtaBtn">Jüri Yap</button>
+			</div>
+		</div>
+	</div>
+</div>
+<form method="post">
+	@Html.AntiForgeryToken()
+</form>
+
+
+<script>
+	document.getElementById("juriAtaBtn").addEventListener("click", function () {
+		var selectedId = document.getElementById("personelSec").value;
+		if (!selectedId || selectedId === "0") return;
+
+		fetch('/Yonetici/Juriler/JuriYap', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+			},
+			body: JSON.stringify(parseInt(selectedId))
+		})
+		.then(response => {
+			if (response.ok) {
+				location.reload();
+			} else {
+				alert("İşlem başarısız.");
+			}
+		});
+	});
+</script>

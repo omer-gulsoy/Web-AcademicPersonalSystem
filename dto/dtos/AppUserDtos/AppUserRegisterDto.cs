@@ -16,5 +16,7 @@ namespace dto.dtos.AppUserDtos
 		public string? UserName { get; set; }
 		public string? Password { get; set; }
 		public string? ConfirmPassword { get; set; }
+        public int BirthYear { get; set; }
+		public int Unvan_Id { get; set; }
 	}
 }

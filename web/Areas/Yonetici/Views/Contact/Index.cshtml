@@ -1,0 +1,71 @@
+﻿@model List<entity.Concrate.Contact>
+@{
+	ViewData["Title"] = "Mesajları Görüntüle";
+	Layout = "~/Areas/Yonetici/Views/Shared/_Layout.cshtml";
+}
+<!-- Tablo -->
+<div class="card">
+	<div class="card-header d-flex justify-content-between">
+		<h5>Mesajlar</h5>
+	</div>
+	<div class="card-body">
+		<div class="table-responsive text-nowrap">
+			<table class="table table-bordered">
+				<thead>
+					<tr style="text-align:center">
+						<th style="width: 80px;"><b>İSİM</b></th>
+						<th style="width: 80px;"><b>SOYİSİM</b></th>
+						<th style="width: 150px;"><b>E-POSTA ADRESİ</b></th>
+						<th><b>KONU</b></th>
+						<th><b>MESAJ</b></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model)
+					{
+						<tr style="text-align:center">
+							<td>@item.Isim</td>
+							<td>@item.Soyisim</td>
+							<td><a href="mailto:@item.Eposta">@item.Eposta</a></td>
+							<td>@item.Konu</td>
+							<td>@item.Mesaj</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<!-- Popup Modal -->
+<div class="modal fade" id="popupModal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Mesaj</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+			</div>
+			<div class="modal-body" id="popupContent"></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Kapat</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Confirm Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-body" id="confirmModalMessage">Emin misiniz?</div>
+			<div class="modal-footer p-2 d-flex justify-content-center">
+				<button type="button" class="btn btn-success btn-sm" id="confirmYes">Evet</button>
+				<button type="button" class="btn btn-danger btn-sm" id="confirmNo">Hayır</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>

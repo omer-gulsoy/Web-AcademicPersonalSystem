@@ -1,6 +1,7 @@
 using data.Concrate;
 using entity.Concrate;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Identity;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,8 +17,25 @@ builder.Services.Configure<FormOptions>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddDbContext<Context>();
-builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>();
+builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>()
+.AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAuthorization(options =>
+{
+	options.AddPolicy("AdminPolicy", policy =>
+		policy.RequireRole("ADMIN"));
+
+	options.AddPolicy("YoneticiPolicy", policy =>
+		policy.RequireRole("YONETICI"));
+
+	options.AddPolicy("AdayPolicy", policy =>
+		policy.RequireRole("ADAY"));
+
+	options.AddPolicy("JuriPolicy", policy =>
+		policy.RequireRole("JURI"));
+});
+
 
 var app = builder.Build();
 
@@ -28,9 +46,9 @@ app.UseStaticFiles();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+	app.UseExceptionHandler("/Home/Error");
+	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+	app.UseHsts();
 }
 
 app.UseHttpsRedirection();
@@ -39,6 +57,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+
 
 app.UseEndpoints(endpoints =>
 {

@@ -1,3 +1,50 @@
+# English
+## Academic Personal System Project
+***Academic Personal Application System project is implemented; Different user types application system different flexibility capability.
+It is a platform that aims to provide benefits and create an efficient institution. This purpose is to provide better management
+easy application management; A more accessible institution for candidates and those who are considering becoming candidates;
+A more informative institution for admins and jurys; Creating an informative and accessible platform about the institution for guest users.***
+
+***As mentioned above, there have been 5 different users on the platform and these users have different authorities.***
+
+### General Functions:
+
+    - Guest Module: Guest unit can get information about academic staff advertisements,
+    View the advertisement and get information about themselves, benefit from educational articles and ask questions to the institution management.
+    The accuracy of the Turkish ID number, name, surname and date of birth entered during registration to the system is checked.
+    
+    Academic Personal Application System e-mail newsletter participation, school communication
+    To view records, open the site. Capacity for registered users to log in.
+    
+    - Administrator Module: In the administrator module, to make all the arrangements of the framed system.
+    
+    There are academic advertisement, staff, advertisement information, jury, statistics display and registration calendar.
+    It has the capacity to display communication packages provided by, e-mail bulletin details, visitor display. It is designed for easy access to all these functions and is user-friendly.
+    
+    - Jury Module: The jury module allows the institution's staff to evaluate their applications,
+    It has the function of displaying personnel registered in the institution system.
+    
+    - Candidate Module: In the candidate module, the total of academic staff advertisements in the institution, advertisements applied by the candidate are collected.
+    It is planned to be displayed in a way that one can create their own academic profile.
+    
+    - Users can view their own profiles in the administrator, jury, candidate modules
+    The area is shared. The areas of all these user profiles can be clearly separated and their locations can be determined.
+
+### Programming Languages ​​I Use:
+
+    Frontend:   - HTML
+                - CSS
+                - JavaScript
+                - SCSS
+    
+    Backend:    - C#
+
+    Database: - MS SQL
+
+> This project is a web application that aims to make people productive in the nursery. It will be developed and improved for educators.
+
+> The texts in the program are in Turkish.
+
 # 🎓 Akademik Personel Başvuru Sistemi
 
 Bu proje, Akademik personel alım süreçlerini dijitalleştirmek amacıyla geliştirilen sistem, adayların ilanlara başvuru yapabilmesini, belgelerini yükleyebilmesini, jüri üyelerinin adayları değerlendirmesini ve yöneticilerin tüm bu süreci merkezi olarak yönetmesini sağlamaktadır.
